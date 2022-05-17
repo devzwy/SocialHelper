@@ -6,16 +6,16 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\devzwy\\Desktop\\123.jks')
-            storePassword '123'
-            keyPassword '123'
-            keyAlias '123'
+            storeFile file('C:\\Users\\devzwy\\Desktop\\kl.jks')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'keling'
         }
         release {
-            keyAlias '123'
-            storePassword '123'
-            keyPassword '123'
-            storeFile file('C:\\Users\\devzwy\\Desktop\\123.jks')
+            keyAlias 'keling'
+            storePassword '123456'
+            keyPassword '123456'
+            storeFile file('C:\\Users\\devzwy\\Desktop\\kl.jks')
         }
     }
     compileSdk 32
@@ -51,7 +51,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation project(path: ':SocialHelper')
+//    implementation project(path: ':SocialHelper')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -61,4 +61,7 @@ dependencies {
     implementation ('com.github.bumptech.glide:glide:4.12.0')
 
     implementation("com.github.Gavras:MultiLineRadioGroup:v1.0.0.6")
+
+    implementation("top.wdsf:SocialHelper:1.0.0")
+
 }

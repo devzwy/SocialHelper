@@ -1,8 +1,8 @@
 package com.keling.gdjx
 
 import android.app.Application
-import wdsf.top.socialhelper.SocialHelper
-import wdsf.top.socialhelper.data.SocialConfig
+import top.wdsf.socialhelper.SocialHelper
+import top.wdsf.socialhelper.data.SocialConfig
 
 class DemoApp : Application() {
 
@@ -10,7 +10,7 @@ class DemoApp : Application() {
         super.onCreate()
         SocialHelper.init(
             SocialConfig.Build(this)
-                .weChat("wx123","123456")
+                .weChat("12222","33333")
                 .build()
         )
     }

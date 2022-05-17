@@ -1,6 +1,6 @@
 package com.keling.gdjx.wxapi
 
-import wdsf.top.socialhelper.ui.SocialWxEntryActivity
+import top.wdsf.socialhelper.ui.SocialWxEntryActivity
 
 class WXEntryActivity : SocialWxEntryActivity() {
 }

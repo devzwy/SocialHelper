@@ -10,19 +10,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.whygraphics.multilineradiogroup.MultiLineRadioGroup
-import wdsf.top.socialhelper.SocialHelper
-import wdsf.top.socialhelper.data.Platform
-import wdsf.top.socialhelper.data.SocialShareMediaType
-import wdsf.top.socialhelper.data.SocialShareToType
-import wdsf.top.socialhelper.data.base.SocialAuth
-import wdsf.top.socialhelper.data.base.SocialShareConfig
-import wdsf.top.socialhelper.data.base.SocialUserInfo
-import wdsf.top.socialhelper.data.shareconfig.SocialWeChatShareConfig
-import wdsf.top.socialhelper.data.wxapi_resp.WeChatAuth
-import wdsf.top.socialhelper.listeners.OnSocialAuthListener
-import wdsf.top.socialhelper.listeners.OnSocialShareListener
-import wdsf.top.socialhelper.listeners.OnSocialUserInfoListener
-import wdsf.top.socialhelper.utils.toJsonStr
+import top.wdsf.socialhelper.SocialHelper
+import top.wdsf.socialhelper.data.Platform
+import top.wdsf.socialhelper.data.SocialShareMediaType
+import top.wdsf.socialhelper.data.SocialShareToType
+import top.wdsf.socialhelper.data.base.SocialAuth
+import top.wdsf.socialhelper.data.base.SocialShareConfig
+import top.wdsf.socialhelper.data.base.SocialUserInfo
+import top.wdsf.socialhelper.data.shareconfig.SocialWeChatShareConfig
+import top.wdsf.socialhelper.data.wxapi_resp.WeChatAuth
+import top.wdsf.socialhelper.listeners.OnSocialAuthListener
+import top.wdsf.socialhelper.listeners.OnSocialShareListener
+import top.wdsf.socialhelper.listeners.OnSocialUserInfoListener
+import top.wdsf.socialhelper.utils.toJsonStr
 
 class MainActivity : AppCompatActivity(), OnSocialAuthListener<SocialAuth>,
     OnSocialUserInfoListener<SocialUserInfo>, OnSocialShareListener {
@@ -68,9 +68,9 @@ class MainActivity : AppCompatActivity(), OnSocialAuthListener<SocialAuth>,
 
     val testTitle = "标题栏目"
     val testDec = "描述文本"
-    val testMp3Url = "https://download.wdsf.top/dev/music/test.mp3"
-    val testMp4Url = "https://download.wdsf.top/dev/video/test.mp4"
-    val testWWWUrl = "http://wdsf.top"
+    val testMp3Url = "https://download.top.wdsf/dev/music/test.mp3"
+    val testMp4Url = "https://download.top.wdsf/dev/video/test.mp4"
+    val testWWWUrl = "http://top.wdsf"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
