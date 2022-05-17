@@ -1,6 +1,6 @@
 # SocialHelper
 
-[SocialHelper](https://markdown.lovejade.cn/?utm_source=markdown.lovejade.cn) 可以帮你快速完成国内以及国外很多平台的授权登录、分享功能。全部采用三方平台最新的Api实现；平台太多需要慢慢迭代上去，我会一直维护这个库。由于测试比较困难，每加入一个平台我都要去做测试，大家不要催。
+[SocialHelper](https://github.com/devzwy/SocialHelper) 可以帮你快速完成国内以及国外很多平台的授权登录、分享功能。全部采用三方平台最新的Api实现；平台太多需要慢慢迭代上去，我会一直维护这个库。由于测试比较困难，每加入一个平台我都要去做测试，大家不要催。
 
 由于该类型库的测试太麻烦，欢迎小伙伴们与我一起维护该库，点击[邮箱1](wdsf.top@gmail.com)/[邮箱2](jason.xa.china@gmail.com)/[邮箱3](dev_zwy@aliyun.com)与我联系，帮忙测试自己拥有的平台。我会在文末永久印下参与测试的小伙伴，愿岁月静好~
 
