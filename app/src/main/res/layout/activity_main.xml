@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:multi_line_radio_group="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_200"
+    android:orientation="vertical"
+    android:paddingStart="15dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="15dp"
+    tools:context="com.keling.gdjx.MainActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical"
+            tools:ignore="MissingClass">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/logTextView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/round_edit"
+                android:editable="false"
+                android:gravity="left"
+                android:hint="授权后进行其他操作!\n授权平台都会绑定包名和签名，请务必将Demo中的包名进行全局查找替换，并使用自己的签名做签名后测试，否则这里的所有功能都会是摆设 - -"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/purple_700"
+                android:textSize="11sp" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="选择授权平台："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.whygraphics.multilineradiogroup.MultiLineRadioGroup
+                android:id="@+id/radioGroupPlatform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                multi_line_radio_group:default_button="微信"
+                multi_line_radio_group:max_in_row="4"
+                multi_line_radio_group:radio_buttons="@array/radio_buttons_platform" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btGetAuth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="获取授权" />
+
+                <Button
+                    android:id="@+id/btGetUserInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="获取用户资料" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="分享类型："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.whygraphics.multilineradiogroup.MultiLineRadioGroup
+                android:id="@+id/radioGroupContentType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                multi_line_radio_group:default_button="文本"
+                multi_line_radio_group:max_in_row="4"
+                multi_line_radio_group:radio_buttons="@array/radio_buttons_type" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="分享到："
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.whygraphics.multilineradiogroup.MultiLineRadioGroup
+                android:id="@+id/radioGroupToType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                multi_line_radio_group:default_button="会话"
+                multi_line_radio_group:max_in_row="4"
+                multi_line_radio_group:radio_buttons="@array/radio_buttons_channel" />
+
+            <Button
+                android:id="@+id/btShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="愉快的发起分享" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

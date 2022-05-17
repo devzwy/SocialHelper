@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">SocialHelperExample</string>
+
+    <string-array name="radio_buttons_platform">
+        <item>微信</item>
+    </string-array>
+
+
+    <string-array name="radio_buttons_type">
+        <item>文本</item>
+        <item>图片</item>
+        <item>音乐</item>
+        <item>视频</item>
+        <item>网页</item>
+        <item>小程序</item>
+    </string-array>
+
+    <string-array name="radio_buttons_channel">
+        <item>会话</item>
+        <item>朋友圈</item>
+        <item>收藏</item>
+    </string-array>
+</resources>
