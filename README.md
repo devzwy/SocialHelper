@@ -17,7 +17,7 @@
 
 **注意**：__Demo是无法直接运行看到结果的。因为平台有限制报名、签名、以及相关key的校验；__
 
-#### 1.引入依赖  [![Packaging status](https://img.shields.io/nexus/r/top.wdsf/SocialHelper?label=SocialHelper&nexusVersion=2&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://repology.org/project/nexus-repository/versions)
+#### 1.引入依赖  [![Packaging status](https://img.shields.io/nexus/r/top.wdsf/SocialHelper?label=SocialHelper&nexusVersion=2&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://github.com/devzwy/SocialHelper)
 
 > 下面的版本号(1.0.0)换成上面图片中的最新版本(**去掉v**)
 > 点击Sync Now
