@@ -55,18 +55,7 @@ open class WeChatSocialEntryActivity : Activity(), IWXAPIEventHandler {
             when (mBaseResp.type) {
                 WECHAT_RESULT_TYPE_LOGIN -> {
                     //授权回调
-                    (mBaseResp as SendAuth.Resp).also { sendAuthResp ->
-                        sendAuthResp.authResult.yes {
-                            onReqAuthSucc(sendAuthResp)
-                        }.otherwise {
-                            mWeChatReqAuthErrorListener(
-                                if (sendAuthResp.errStr == null) application.getString(
-                                    R.string.social_wechat_resp_auth_fail
-                                ) else sendAuthResp.errStr
-                            )
-                        }
-                    }
-
+                    onReqAuthSucc(mBaseResp as SendAuth.Resp)
                 }
 
                 WECHAT_RESULT_TYPE_SHARE -> {

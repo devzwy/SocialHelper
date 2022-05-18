@@ -33,6 +33,11 @@ var mWeChatReqShareSuccessListener: (() -> Unit)? = null
 //微信分享结果错误回传接口
 var mWeChatReqShareErrorListener: ((String) -> Unit)? = null
 
+//微信支付结果回传接口
+lateinit var mWeChatReqPaySuccessListener: () -> Unit
+
+//微信支付结果错误回传接口
+lateinit var mWeChatReqPayErrorListener: (String) -> Unit
 
 /**
  * 发起微信授权 如果配置了appSecretKey则会返回 authCode + accessToken，否则将只返回 authCode
@@ -97,7 +102,7 @@ fun SocialHelper.getUserInfo(
 fun SocialHelper.shareTextToWeChat(
     weChatShareType: WeChatShareType,
     text: String,
-    description: String? = null,
+    description: String,
     onShareSuccess: (() -> Unit)? = null,
     onShareError: ((String) -> Unit)? = null
 ) {
@@ -113,9 +118,7 @@ fun SocialHelper.shareTextToWeChat(
             mWXMediaMessage.mediaObject = WXTextObject().also {
                 it.text = text
             }
-            (description.isNullOrEmpty()).no {
                 mWXMediaMessage.description = description
-            }
         }
         scene = getShareScene(weChatShareType)
     })
@@ -175,7 +178,7 @@ fun SocialHelper.shareImageToWeChat(
 fun SocialHelper.shareMusicToWeChat(
     weChatShareType: WeChatShareType,
     musicUrl: String,
-    musicTitle: String?=null,
+    musicTitle: String,
     musicDescription: String?=null,
     thumbBitmap: Bitmap? = null,
     onShareSuccess: (() -> Unit)? = null,
@@ -286,7 +289,7 @@ fun SocialHelper.shareWebPageToWeChat(
     weChatShareType: WeChatShareType,
     webpageUrl: String,
     webpageTitle: String?=null,
-    webpageDescription: String?=null,
+    webpageDescription: String,
     thumbBitmap: Bitmap? = null,
     onShareSuccess: (() -> Unit)? = null,
     onShareError: ((String) -> Unit)? = null
@@ -398,9 +401,9 @@ fun SocialHelper.shareMiniProgramToWeChat(
  * 发起微信支付
  * [partnerId] 商户号 请填写商户号mchid对应的值。示例值：1900000109
  * [prepayid] 预支付交易会话ID 微信返回的支付交易会话ID，该值有效期为2小时。 示例值： WX1217752501201407033233368018
- *
+ * [sign] 签名
  */
-fun SocialHelper.startWeChatPay(partnerId:String,prepayId:String,sign:String){
+fun SocialHelper.startWeChatPay(partnerId:String,prepayId:String,sign:String,onPaySuccess:()->Unit,onPayError:(String)->Unit){
 
     regWeChatSDK(this)
 

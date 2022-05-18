@@ -45,16 +45,11 @@ open class WeChatSocialPayEntryActivity : Activity(), IWXAPIEventHandler {
 
         (mBaseResp.errCode == BaseResp.ErrCode.ERR_OK).yes {
             "${localClassName}->onResp():mBaseResp:${mBaseResp.toJsonStr()}".logD()
-
-
+            mWeChatReqPaySuccessListener()
         }.otherwise {
-
+           mWeChatReqPayErrorListener( if (mBaseResp.errCode == BaseResp.ErrCode.ERR_USER_CANCEL) application.getString(R.string.social_wechat_pay_cancel_err) else (if (mBaseResp.errStr.isNullOrEmpty()) getString(R.string.social_wechat_pay_other_err,mBaseResp.errCode) else mBaseResp.errStr))
             "${localClassName}->onResp():mBaseResp:${mBaseResp.toJsonStr()}".logE()
-
         }
-
-        mWeChatReqShareErrorListener = null
-        mWeChatReqShareSuccessListener = null
 
         finish()
 

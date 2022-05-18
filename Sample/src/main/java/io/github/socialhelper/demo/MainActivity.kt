@@ -25,7 +25,12 @@ class MainActivity : AppCompatActivity() {
 //                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
 //            })
 
-            SocialHelper.startWeChatPay("1365026102","wx271754067562114fedb5565b1827663000","D94996F23D4542B277F35756122DEF7C")
+//            SocialHelper.startWeChatPay("1365026102","wx271754067562114fedb5565b1827663000","C380BEC2BFD727A4B6845133519F3AD6",{
+//                Toast.makeText(this,"支付成功",Toast.LENGTH_LONG).show()
+//            },{
+//                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
+//            })
+
 
 //            SocialHelper.getUserInfo("56_qoH8DaSoiTeRKWA-KHd6ExkKKK3j9N5v5ykfvJ22D3OG97hUFOzY_Xr-VHWS4SVErlh3Ox3Mp6p8sAieRQfhmgzN-OBslqxG6PKFhyvWZAQ","oHyiq6WWtG8-xgJDWWYMvShFRNyU",{
 //                Toast.makeText(this,it.toJsonStr(), Toast.LENGTH_LONG).show()
