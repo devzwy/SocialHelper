@@ -1,52 +1,338 @@
 package io.github.socialhelper.demo
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.text.method.ScrollingMovementMethod
+import android.view.MotionEvent
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
+import com.whygraphics.multilineradiogroup.MultiLineRadioGroup
 import io.github.social.SocialHelper
-import io.github.social.utils.logE
 import io.github.social.utils.toJsonStr
 import io.github.socialhelper.wechat.*
 import io.github.socialhelper.wechat.data.WeChatShareType
+import io.github.socialhelper.wechat.data.WeChatSocialReqAuthRespData
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var platforms: Array<String>
+
+    lateinit var contentTypes: Array<String>
+
+    lateinit var shareToTypes: Array<String>
+
+    //记录日志的txt
+    lateinit var logTextView: AppCompatEditText
+
+    //平台
+    lateinit var radioGroupPlatform: MultiLineRadioGroup
+
+    //分享内容的类型
+    lateinit var radioGroupContentType: MultiLineRadioGroup
+
+    //目标通道类型
+    lateinit var radioGroupToType: MultiLineRadioGroup
+
+    //获取授权按钮
+    lateinit var btGetAuth: Button
+
+    //获取用户资料按钮
+    lateinit var btGetUserInfo: Button
+
+    //分享按钮
+    lateinit var btShare: Button
+
+    //默认的平台 0微信
+    var platform = 0
+
+    //默认分享到的类型
+    var shareToType = 0
+
+    //默认分享内容的类型
+    var shareMediaType = 0
+
+    val testTitle = "微信审核过了，分享个视频看看！"
+    val testDec = "谁知道大佬在哪直播！"
+    val testMp3Url = "https://download.wdsf.top/dev/music/test.mp3"
+    val testMp4Url = "https://download.wdsf.top/dev/video/test.mp4"
+    val testWWWUrl = "http://wdsf.top"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<View>(R.id.tvvvv).setOnClickListener { v ->
-//            SocialHelper.aaa()
-//            SocialHelper.reqWeChatAuth(onWeChatReqAuthSuccess = {
-//                Toast.makeText(this,it.toJsonStr(),Toast.LENGTH_LONG).show()
-//            }, onWeChatReqAuthError = {
-//                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
-//            })
+        platforms = resources.getStringArray(R.array.radio_buttons_platform)
+        shareToTypes = resources.getStringArray(R.array.radio_buttons_channel)
+        contentTypes = resources.getStringArray(R.array.radio_buttons_type)
 
-//            SocialHelper.startWeChatPay("1365026102","wx271754067562114fedb5565b1827663000","C380BEC2BFD727A4B6845133519F3AD6",{
-//                Toast.makeText(this,"支付成功",Toast.LENGTH_LONG).show()
-//            },{
-//                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
-//            })
+        initView()
+
+        initRadioGroupListener()
+
+        initClickListener()
+
+        initLogView()
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initLogView() {
+        logTextView.movementMethod = ScrollingMovementMethod.getInstance()
+        logTextView.setOnTouchListener { v, event ->
+
+            if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
+                v.parent.requestDisallowInterceptTouchEvent(true)
+            } else if (event.action == MotionEvent.ACTION_UP) {
+                v.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
+    }
+
+    var weChatAuthData: WeChatSocialReqAuthRespData? = null
+
+    private fun initClickListener() {
+
+        //获取授权按钮
+        btGetAuth.setOnClickListener {
+
+            if (platform == 0) {
+                SocialHelper.reqWeChatAuth(onWeChatReqAuthError = {
+                    appendLog(it)
+                }, onWeChatReqAuthSuccess = {
+                    appendLog(it.toJsonStr())
+                    weChatAuthData = it
+                    if (it.socialAccessTokenData != null) {
+                        btGetUserInfo.isEnabled = true
+                    }
+                })
+            }
+        }
+
+        //获取用户资料按钮
+        btGetUserInfo.setOnClickListener {
+
+            if (platform == 0) {
+                weChatAuthData?.socialAccessTokenData?.let {
+                    SocialHelper.getWeChatUserInfo(it.access_token, it.openid, {
+                        appendLog(it.toJsonStr())
+                    }, {
+                        appendLog(it)
+                    })
+                }
+            }
+
+        }
 
 
-//            SocialHelper.getUserInfo("56_qoH8DaSoiTeRKWA-KHd6ExkKKK3j9N5v5ykfvJ22D3OG97hUFOzY_Xr-VHWS4SVErlh3Ox3Mp6p8sAieRQfhmgzN-OBslqxG6PKFhyvWZAQ","oHyiq6WWtG8-xgJDWWYMvShFRNyU",{
-//                Toast.makeText(this,it.toJsonStr(), Toast.LENGTH_LONG).show()
-//            },{
-//                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
-//            })
+        //分享按钮
+        btShare.setOnClickListener {
 
-//            val bitmap = BitmapFactory.decodeResource(resources, R.raw.test)
-//
-//            SocialHelper.shareMiniProgramToWeChat(WeChatShareType.SCENE_FAVORITE,"123",0,"123","",false,null,null,bitmap,{
-//                Toast.makeText(this,"分享成功",Toast.LENGTH_LONG).show()
-//            },{
-//                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
-//            })
+            val bitmap = BitmapFactory.decodeResource(resources, R.raw.test)
+
+            when (platform) {
+                0 -> {
+                    when (shareMediaType) {
+                        0 -> {
+
+                            SocialHelper.shareTextToWeChat(if (shareToType == 0) WeChatShareType.SCENE_SESSION else if (shareToType == 1) WeChatShareType.SCENE_TIMELINE else WeChatShareType.SCENE_FAVORITE,
+                                testTitle,
+                                testDec,
+                                {
+                                    appendLog("分享成功")
+                                },
+                                {
+                                    appendLog(it)
+                                })
+
+                        }
+
+                        1 -> {
+                            //图片
+                            SocialHelper.shareImageToWeChat(if (shareToType == 0) WeChatShareType.SCENE_SESSION else if (shareToType == 1) WeChatShareType.SCENE_TIMELINE else WeChatShareType.SCENE_FAVORITE,
+                                bitmap,
+                                {
+                                    appendLog("分享成功")
+                                },
+                                {
+                                    appendLog(it)
+                                })
+                        }
+
+                        2 -> {
+                            //音乐
+                            SocialHelper.shareMusicToWeChat(if (shareToType == 0) WeChatShareType.SCENE_SESSION else if (shareToType == 1) WeChatShareType.SCENE_TIMELINE else WeChatShareType.SCENE_FAVORITE,
+                                testMp3Url,
+                                testTitle,
+                                testDec,
+                                bitmap,
+                                {
+                                    appendLog("分享成功")
+                                },
+                                {
+                                    appendLog(it)
+                                })
+                        }
+
+
+                        3 -> {
+                            //视频
+                            SocialHelper.shareVideoToWeChat(if (shareToType == 0) WeChatShareType.SCENE_SESSION else if (shareToType == 1) WeChatShareType.SCENE_TIMELINE else WeChatShareType.SCENE_FAVORITE,
+                                testMp4Url,
+                                testTitle,
+                                testDec,
+                                bitmap,
+                                {
+                                    appendLog("分享成功")
+                                },
+                                {
+                                    appendLog(it)
+                                })
+                        }
+
+                        4 -> {
+                            //网页
+                            SocialHelper.shareWebPageToWeChat(if (shareToType == 0) WeChatShareType.SCENE_SESSION else if (shareToType == 1) WeChatShareType.SCENE_TIMELINE else WeChatShareType.SCENE_FAVORITE,
+                                testWWWUrl,
+                                testTitle,
+                                testDec,
+                                bitmap,
+                                {
+                                    appendLog("分享成功")
+                                },
+                                {
+                                    appendLog(it)
+                                })
+                        }
+
+                        5 -> {
+                            //网页
+                            SocialHelper.shareMiniProgramToWeChat(if (shareToType == 0) WeChatShareType.SCENE_SESSION else if (shareToType == 1) WeChatShareType.SCENE_TIMELINE else WeChatShareType.SCENE_FAVORITE,
+                                "http://www.qq.com",
+                                0,
+                                "gh_d43f693ca31f",
+                                "/12121",
+                                false,
+                                "111",
+                                "2222",
+                                bitmap,
+                                {
+                                    appendLog("分享成功")
+                                },
+                                {
+                                    appendLog(it)
+                                })
+                        }
+                    }
+                }
+            }
 
         }
 
     }
+
+    private fun initRadioGroupListener() {
+
+        //平台选择回调
+        radioGroupPlatform.setOnCheckedChangeListener(MultiLineRadioGroup.OnCheckedChangeListener { group, button ->
+            when (button.text.toString()) {
+                platforms[0] -> {
+                    //微信
+                    platform = 0
+                }
+            }
+
+            refreshUI()
+
+        })
+
+        //分享类型选择回调
+        radioGroupContentType.setOnCheckedChangeListener(MultiLineRadioGroup.OnCheckedChangeListener { group, button ->
+
+            when (button.text) {
+                contentTypes[0] -> {
+                    shareMediaType = 0
+                }
+
+                contentTypes[1] -> {
+                    shareMediaType = 1
+                }
+
+                contentTypes[2] -> {
+                    shareMediaType = 2
+                }
+
+                contentTypes[3] -> {
+                    shareMediaType = 3
+                }
+
+                contentTypes[4] -> {
+                    shareMediaType = 4
+                }
+
+                contentTypes[5] -> {
+                    shareMediaType = 5
+                }
+            }
+
+            refreshUI()
+        })
+
+        //分享目标平台切换
+        radioGroupToType.setOnCheckedChangeListener(MultiLineRadioGroup.OnCheckedChangeListener { group, button ->
+
+            when (button.text) {
+                shareToTypes[0] -> {
+                    //会话
+                    shareToType = 0
+                }
+
+                shareToTypes[1] -> {
+                    //朋友圈
+                    shareToType = 1
+                }
+
+                shareToTypes[2] -> {
+                    //收藏
+                    shareToType = 2
+                }
+                else -> {
+                }
+            }
+
+            refreshUI()
+        })
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun refreshUI() {
+    }
+
+    private fun initView() {
+        logTextView = findViewById(R.id.logTextView)
+        radioGroupPlatform = findViewById(R.id.radioGroupPlatform)
+        radioGroupContentType = findViewById(R.id.radioGroupContentType)
+        radioGroupToType = findViewById(R.id.radioGroupToType)
+        btGetAuth = findViewById(R.id.btGetAuth)
+        btGetUserInfo = findViewById(R.id.btGetUserInfo)
+        btShare = findViewById(R.id.btShare)
+    }
+
+
+    private fun toast(msg: String) {
+        Toast.makeText(application, msg, Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun appendLog(content: String) {
+        if (!logTextView.text.isNullOrEmpty()) {
+            logTextView.append("\n\n")
+        }
+        logTextView.append(content)
+        logTextView.setSelection(logTextView.text?.length ?: 0)
+    }
+
 }

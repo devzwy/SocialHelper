@@ -6,13 +6,13 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('E:\\StudioProjects\\keys\\social_demo.jks')
+            storeFile file('E:/StudioProjects/keys/social_demo.jks')
             storePassword 'abc123456'
             keyPassword 'abc123456'
             keyAlias 'socialhelper'
         }
         release {
-            storeFile file('E:\\StudioProjects\\keys\\social_demo.jks')
+            storeFile file('E:/StudioProjects/keys/social_demo.jks')
             storePassword 'abc123456'
             keyAlias 'socialhelper'
             keyPassword 'abc123456'
@@ -37,8 +37,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -58,4 +58,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
+    implementation("com.github.Gavras:MultiLineRadioGroup:v1.0.0.6")
 }

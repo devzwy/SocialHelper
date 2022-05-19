@@ -51,6 +51,11 @@ fun SocialHelper.reqWeChatAuth(
 
     regWeChatSDK(this)
 
+    mIWXAPI.isWXAppInstalled.no {
+        onWeChatReqAuthError(socialConfig.application.getString(R.string.social_not_install_wechat_app_tip))
+        return
+    }
+
     mIWXAPI.sendReq(SendAuth.Req().also {
         it.scope = REQ_AUTH_SCOPE
         extData.isEmpty().no {
@@ -67,7 +72,7 @@ fun SocialHelper.reqWeChatAuth(
  * [accessToken] 通过[reqWeChatAuth]获得[WeChatSocialAccessTokenData.access_token]传入
  * [openId]  通过[reqWeChatAuth]获得[WeChatSocialAccessTokenData.openid]传入
  */
-fun SocialHelper.getUserInfo(
+fun SocialHelper.getWeChatUserInfo(
     accessToken: String,
     openId: String = "",
     onGetUserInfoSuccess: (WeChatSocialUserInfoData) -> Unit,

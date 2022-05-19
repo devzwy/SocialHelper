@@ -9,7 +9,7 @@ class App:Application() {
         super.onCreate()
         SocialHelper.init(SocialConfig.buildSocialConfig(this){
             enableLog()
-            enableWeChatPlatform("wx123","456")
+            enableWeChatPlatform("微信AppId","微信secretKey")
         })
     }
 

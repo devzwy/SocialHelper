@@ -20,14 +20,11 @@
             </intent-filter>
         </activity>
 
+
         <activity android:name=".wxapi.WXEntryActivity"
             android:launchMode="singleTask"
+            android:taskAffinity="io.github.socialhelper.demo"
             android:exported="true"/>
-
-        <activity android:name=".wxapi.WxPayEntryActivity"
-            android:launchMode="singleTask"
-            android:exported="true"/>
-
 
     </application>
 
