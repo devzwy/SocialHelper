@@ -3,6 +3,7 @@
 
     <string-array name="radio_buttons_platform">
         <item>微信</item>
+        <item>支付宝</item>
     </string-array>
 
 
@@ -19,5 +20,12 @@
         <item>会话</item>
         <item>朋友圈</item>
         <item>收藏</item>
+    </string-array>
+
+
+    <string-array name="radio_buttons_type_alipay">
+        <item>文本</item>
+        <item>图片</item>
+        <item>网页</item>
     </string-array>
 </resources>

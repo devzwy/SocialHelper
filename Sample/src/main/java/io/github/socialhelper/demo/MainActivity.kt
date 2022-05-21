@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
@@ -15,6 +17,10 @@ import io.github.social.utils.toJsonStr
 import io.github.socialhelper.wechat.*
 import io.github.socialhelper.wechat.data.WeChatShareType
 import io.github.socialhelper.wechat.data.WeChatSocialReqAuthRespData
+import it.github.socialhelper.alipay.reqAliPayAuth
+import it.github.socialhelper.alipay.shareImageToAlipay
+import it.github.socialhelper.alipay.shareTextToAlipay
+import it.github.socialhelper.alipay.shareWebPageToAlipay
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     //目标通道类型
     lateinit var radioGroupToType: MultiLineRadioGroup
 
+    lateinit var tv2:TextView
+
     //获取授权按钮
     lateinit var btGetAuth: Button
 
@@ -45,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     //分享按钮
     lateinit var btShare: Button
 
-    //默认的平台 0微信
+    //默认的平台 0微信 1支付宝
     var platform = 0
 
     //默认分享到的类型
@@ -54,10 +62,11 @@ class MainActivity : AppCompatActivity() {
     //默认分享内容的类型
     var shareMediaType = 0
 
-    val testTitle = "微信审核过了，分享个视频看看！"
-    val testDec = "谁知道大佬在哪直播！"
+    val testTitle = "分享的测试标题"
+    val testDec = "分享的测试描述内容！"
     val testMp3Url = "https://download.wdsf.top/dev/music/test.mp3"
     val testMp4Url = "https://download.wdsf.top/dev/video/test.mp4"
+    val testImageUrl = "https://download.wdsf.top/dev/image/test.webp"
     val testWWWUrl = "http://wdsf.top"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,6 +119,17 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             }
+
+            if (platform == 1) {
+                //支付宝
+                Thread {
+                    SocialHelper.reqAliPayAuth(this, true, {
+                        appendLog(it)
+                    }, {
+                        appendLog(it.toJsonStr())
+                    })
+                }.start()
+            }
         }
 
         //获取用户资料按钮
@@ -126,7 +146,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
 
         //分享按钮
         btShare.setOnClickListener {
@@ -209,9 +228,9 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         5 -> {
-                            //网页
+                            //小程序
                             SocialHelper.shareMiniProgramToWeChat(if (shareToType == 0) WeChatShareType.SCENE_SESSION else if (shareToType == 1) WeChatShareType.SCENE_TIMELINE else WeChatShareType.SCENE_FAVORITE,
-                                "http://www.qq.com",
+                                "http://www.wdsf.top",
                                 0,
                                 "gh_d43f693ca31f",
                                 "/12121",
@@ -228,6 +247,42 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+
+                1 -> {
+
+                    when (shareMediaType) {
+                        0 -> {
+                            SocialHelper.shareTextToAlipay(testTitle, {
+                                appendLog("分享到支付宝成功")
+                            }, {
+                                appendLog(it)
+                            })
+                        }
+                        1 -> {
+                            SocialHelper.shareImageToAlipay(testImageUrl, {
+                                appendLog("分享到支付宝成功")
+                            }, {
+                                appendLog(it)
+                            })
+                        }
+
+                        2 -> {
+                            SocialHelper.shareWebPageToAlipay(
+                                testWWWUrl,
+                                testTitle,
+                                testDec,
+                                testImageUrl,
+                                {
+                                    appendLog("分享到支付宝成功")
+                                },
+                                {
+                                    appendLog(it)
+                                })
+                        }
+
+                        else -> {}
+                    }
+                }
             }
 
         }
@@ -242,6 +297,36 @@ class MainActivity : AppCompatActivity() {
                 platforms[0] -> {
                     //微信
                     platform = 0
+
+                    contentTypes = resources.getStringArray(R.array.radio_buttons_type)
+
+                    radioGroupContentType.removeAllButtons()
+                    contentTypes.forEach {
+                        radioGroupContentType.addButtons(it)
+                    }
+
+                    radioGroupContentType.check(contentTypes[0])
+
+                    tv2.visibility = View.VISIBLE
+                    radioGroupToType.visibility = View.VISIBLE
+
+                }
+
+                platforms[1] -> {
+                    //支付宝
+                    platform = 1
+
+                    contentTypes = resources.getStringArray(R.array.radio_buttons_type_alipay)
+
+                    radioGroupContentType.removeAllButtons()
+                    contentTypes.forEach {
+                        radioGroupContentType.addButtons(it)
+                    }
+
+                    radioGroupContentType.check(contentTypes[0])
+
+                    radioGroupToType.visibility = View.GONE
+                    tv2.visibility = View.GONE
                 }
             }
 
@@ -316,6 +401,7 @@ class MainActivity : AppCompatActivity() {
         radioGroupPlatform = findViewById(R.id.radioGroupPlatform)
         radioGroupContentType = findViewById(R.id.radioGroupContentType)
         radioGroupToType = findViewById(R.id.radioGroupToType)
+        tv2 =  findViewById(R.id.tv2)
         btGetAuth = findViewById(R.id.btGetAuth)
         btGetUserInfo = findViewById(R.id.btGetUserInfo)
         btShare = findViewById(R.id.btShare)

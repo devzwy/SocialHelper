@@ -1,0 +1,6 @@
+<resources>
+    <string name="social_not_install_alipay_app_tip">支付宝未安装，请安装支付宝后再试</string>
+    <string name="social_auth_code_null">授权码获取失败，请重试</string>
+    <string name="social_auth_fail">授权失败</string>
+
+</resources>

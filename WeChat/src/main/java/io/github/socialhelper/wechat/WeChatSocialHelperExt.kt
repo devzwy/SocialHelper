@@ -39,6 +39,9 @@ lateinit var mWeChatReqPaySuccessListener: () -> Unit
 //微信支付结果错误回传接口
 lateinit var mWeChatReqPayErrorListener: (String) -> Unit
 
+//是否初始化微信SDK的标识
+var isInitWeChatApi = false
+
 /**
  * 发起微信授权 如果配置了appSecretKey则会返回 authCode + accessToken，否则将只返回 authCode
  *  [extData] 微信授权的扩展字段 用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止 csrf 攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加 session 进行校验。在state传递的过程中会将该参数作为url的一部分进行处理，因此建议对该参数进行url encode操作，防止其中含有影响url解析的特殊字符（如'#'、'&'等）导致该参数无法正确回传。
@@ -117,13 +120,20 @@ fun SocialHelper.shareTextToWeChat(
 
     regWeChatSDK(this)
 
+    mIWXAPI.isWXAppInstalled.no {
+        if (onShareError != null) {
+            onShareError(socialConfig.application.getString(R.string.social_not_install_wechat_app_tip))
+        }
+        return
+    }
+
     mIWXAPI.sendReq(SendMessageToWX.Req().apply {
         transaction = buildTransaction("text")
         message = WXMediaMessage().also { mWXMediaMessage ->
             mWXMediaMessage.mediaObject = WXTextObject().also {
                 it.text = text
             }
-                mWXMediaMessage.description = description
+            mWXMediaMessage.description = description
         }
         scene = getShareScene(weChatShareType)
     })
@@ -147,6 +157,13 @@ fun SocialHelper.shareImageToWeChat(
     mWeChatReqShareErrorListener = onShareError
 
     regWeChatSDK(this)
+
+    mIWXAPI.isWXAppInstalled.no {
+        if (onShareError != null) {
+            onShareError(socialConfig.application.getString(R.string.social_not_install_wechat_app_tip))
+        }
+        return
+    }
 
     val thumbBitmap = Bitmap.createScaledBitmap(
         imageBitmap,
@@ -184,7 +201,7 @@ fun SocialHelper.shareMusicToWeChat(
     weChatShareType: WeChatShareType,
     musicUrl: String,
     musicTitle: String,
-    musicDescription: String?=null,
+    musicDescription: String? = null,
     thumbBitmap: Bitmap? = null,
     onShareSuccess: (() -> Unit)? = null,
     onShareError: ((String) -> Unit)? = null
@@ -194,6 +211,13 @@ fun SocialHelper.shareMusicToWeChat(
     mWeChatReqShareErrorListener = onShareError
 
     regWeChatSDK(this)
+
+    mIWXAPI.isWXAppInstalled.no {
+        if (onShareError != null) {
+            onShareError(socialConfig.application.getString(R.string.social_not_install_wechat_app_tip))
+        }
+        return
+    }
 
     mIWXAPI.sendReq(SendMessageToWX.Req().apply {
 
@@ -206,7 +230,7 @@ fun SocialHelper.shareMusicToWeChat(
             mWXMediaMessage.title = musicTitle
             mWXMediaMessage.description = musicDescription
 
-            (thumbBitmap!=null).yes {
+            (thumbBitmap != null).yes {
                 mWXMediaMessage.thumbData = bitmap2ByteArray(
                     Bitmap.createScaledBitmap(
                         thumbBitmap!!,
@@ -238,8 +262,8 @@ fun SocialHelper.shareMusicToWeChat(
 fun SocialHelper.shareVideoToWeChat(
     weChatShareType: WeChatShareType,
     videoUrl: String,
-    videoTitle: String?=null,
-    videoDescription: String?=null,
+    videoTitle: String? = null,
+    videoDescription: String? = null,
     thumbBitmap: Bitmap? = null,
     onShareSuccess: (() -> Unit)? = null,
     onShareError: ((String) -> Unit)? = null
@@ -249,6 +273,13 @@ fun SocialHelper.shareVideoToWeChat(
     mWeChatReqShareErrorListener = onShareError
 
     regWeChatSDK(this)
+
+    mIWXAPI.isWXAppInstalled.no {
+        if (onShareError != null) {
+            onShareError(socialConfig.application.getString(R.string.social_not_install_wechat_app_tip))
+        }
+        return
+    }
 
     mIWXAPI.sendReq(SendMessageToWX.Req().apply {
 
@@ -261,7 +292,7 @@ fun SocialHelper.shareVideoToWeChat(
             mWXMediaMessage.title = videoTitle
             mWXMediaMessage.description = videoDescription
 
-            (thumbBitmap!=null).yes {
+            (thumbBitmap != null).yes {
                 mWXMediaMessage.thumbData = bitmap2ByteArray(
                     Bitmap.createScaledBitmap(
                         thumbBitmap!!,
@@ -293,7 +324,7 @@ fun SocialHelper.shareVideoToWeChat(
 fun SocialHelper.shareWebPageToWeChat(
     weChatShareType: WeChatShareType,
     webpageUrl: String,
-    webpageTitle: String?=null,
+    webpageTitle: String? = null,
     webpageDescription: String,
     thumbBitmap: Bitmap? = null,
     onShareSuccess: (() -> Unit)? = null,
@@ -304,6 +335,13 @@ fun SocialHelper.shareWebPageToWeChat(
     mWeChatReqShareErrorListener = onShareError
 
     regWeChatSDK(this)
+
+    mIWXAPI.isWXAppInstalled.no {
+        if (onShareError != null) {
+            onShareError(socialConfig.application.getString(R.string.social_not_install_wechat_app_tip))
+        }
+        return
+    }
 
     mIWXAPI.sendReq(SendMessageToWX.Req().apply {
 
@@ -316,7 +354,7 @@ fun SocialHelper.shareWebPageToWeChat(
             mWXMediaMessage.title = webpageTitle
             mWXMediaMessage.description = webpageDescription
 
-            (thumbBitmap!=null).yes {
+            (thumbBitmap != null).yes {
                 mWXMediaMessage.thumbData = bitmap2ByteArray(
                     Bitmap.createScaledBitmap(
                         thumbBitmap!!,
@@ -354,8 +392,8 @@ fun SocialHelper.shareMiniProgramToWeChat(
     miniProgramRealId: String,
     miniprogramPath: String,
     withShareTicket: Boolean = false,
-    webpageTitle: String?=null,
-    webpageDescription: String?=null,
+    webpageTitle: String? = null,
+    webpageDescription: String? = null,
     thumbBitmap: Bitmap,
     onShareSuccess: (() -> Unit)? = null,
     onShareError: ((String) -> Unit)? = null
@@ -365,6 +403,13 @@ fun SocialHelper.shareMiniProgramToWeChat(
     mWeChatReqShareErrorListener = onShareError
 
     regWeChatSDK(this)
+
+    mIWXAPI.isWXAppInstalled.no {
+        if (onShareError != null) {
+            onShareError(socialConfig.application.getString(R.string.social_not_install_wechat_app_tip))
+        }
+        return
+    }
 
     mIWXAPI.sendReq(SendMessageToWX.Req().apply {
 
@@ -408,60 +453,91 @@ fun SocialHelper.shareMiniProgramToWeChat(
  * [prepayid] 预支付交易会话ID 微信返回的支付交易会话ID，该值有效期为2小时。 示例值： WX1217752501201407033233368018
  * [sign] 签名
  */
-fun SocialHelper.startWeChatPay(partnerId:String,prepayId:String,sign:String,onPaySuccess:()->Unit,onPayError:(String)->Unit){
+fun SocialHelper.startWeChatPay(
+    partnerId: String,
+    prepayId: String,
+    sign: String,
+    onPaySuccess: () -> Unit,
+    onPayError: (String) -> Unit
+) {
 
     regWeChatSDK(this)
 
     mIWXAPI.sendReq(PayReq().also {
         it.appId = socialConfig.weChatAppId
         it.partnerId = partnerId
-        it.prepayId= prepayId
+        it.prepayId = prepayId
         it.packageValue = "Sign=WXPay"
-        it.nonceStr=getRandomWeChatString()
-        it.timeStamp= "${System.currentTimeMillis()/1000}"
-        it.sign= sign
+        it.nonceStr = getRandomWeChatString()
+        it.timeStamp = "${System.currentTimeMillis() / 1000}"
+        it.sign = sign
     })
 
-}
-
-fun main() {
-    for (i in 1..100){
-        println(getRandomWeChatString())
-    }
 }
 
 /**
  * 生成随机数
  */
-private fun getRandomWeChatString():String{
-    val s = arrayOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+private fun getRandomWeChatString(): String {
+    val s = arrayOf(
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z"
+    )
 
-    val ca = (System.currentTimeMillis()/10).toString().toCharArray()
+    val ca = (System.currentTimeMillis() / 10).toString().toCharArray()
 
-    val ac = (System.currentTimeMillis()/10).toString().toCharArray().reversed()
+    val ac = (System.currentTimeMillis() / 10).toString().toCharArray().reversed()
 
     val randomStr = StringBuffer()
 
     for (c in ca) {
-        randomStr.append(s[Random.nextInt(0,s.size-1)]).append(c).append(s[Random.nextInt(0,s.size-1)])
+        randomStr.append(s[Random.nextInt(0, s.size - 1)]).append(c)
+            .append(s[Random.nextInt(0, s.size - 1)])
     }
     for (c2 in ac) {
-        randomStr.append(s[Random.nextInt(0,s.size-1)]).append(c2).append(s[Random.nextInt(0,s.size-1)])
+        randomStr.append(s[Random.nextInt(0, s.size - 1)]).append(c2)
+            .append(s[Random.nextInt(0, s.size - 1)])
     }
 
-    return (if (randomStr.toString().length>30) randomStr.toString().uppercase(Locale.getDefault())
-        .substring(0,30) else randomStr.toString().uppercase(Locale.getDefault()))
+    return (if (randomStr.toString().length > 30) randomStr.toString()
+        .uppercase(Locale.getDefault())
+        .substring(0, 30) else randomStr.toString().uppercase(Locale.getDefault()))
 
 }
-
 
 /**
  * 注册微信SDK
  */
 private fun regWeChatSDK(mSocialHelper: SocialHelper) {
-    mSocialHelper.socialConfig.apply {
-        mIWXAPI = WXAPIFactory.createWXAPI(application, weChatAppId, false)
-        mIWXAPI.registerApp(weChatAppId)
+    if (!isInitWeChatApi) {
+        mSocialHelper.socialConfig.apply {
+            mIWXAPI = WXAPIFactory.createWXAPI(application, weChatAppId, false)
+            mIWXAPI.registerApp(weChatAppId)
+        }
     }
 }
 

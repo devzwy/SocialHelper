@@ -22,10 +22,27 @@ class SocialConfig private constructor(
     /**
      * 内部网络请求使用
      */
-    val okHttpClient:OkHttpClient
+    val okHttpClient: OkHttpClient,
+
+    /**
+     * 支付宝AppId
+     */
+    val alipayAppId: String,
+
+    /**
+     * 支付宝商户号
+     */
+    val alipayPid: String,
+
+    /**
+     * 支付宝应用私钥
+     */
+    val alipayPrivateKey: String
+
+
 ) {
 
-    companion object{
+    companion object {
         inline fun buildSocialConfig(application: Application, block: Builder.() -> Unit) = Builder(
             application
         ).apply(block).build()
@@ -43,17 +60,30 @@ class SocialConfig private constructor(
         //内部网络请求使用
         private var okHttpClient = OkHttpClient()
 
+        //支付宝AppId
+        private var alipayAppId = ""
+
+        /**
+         * 支付宝商户号
+         */
+        private var alipayPid = ""
+
+        /**
+         * 支付宝商户号
+         */
+        private var alipayPrivateKey = ""
+
         /**
          * 开启日志  可选配置 默认关闭
          */
-        fun enableLog(tag:String = "SocialHelper") {
-            SocialLogUtil.init(tag,true)
+        fun enableLog(tag: String = "SocialHelper") {
+            SocialLogUtil.init(tag, true)
         }
 
         /**
          * SDK内部所有网络请求将使用该httpClient完成，可选配置 默认使用SDK内部okhttp实现
          */
-        fun buildCustomOkHttpClient(okHttpClient: OkHttpClient){
+        fun buildCustomOkHttpClient(okHttpClient: OkHttpClient) {
             this.okHttpClient = okHttpClient
         }
 
@@ -73,8 +103,28 @@ class SocialConfig private constructor(
             "微信平台配置完成! [weChatAppId:${this.weChatAppId}]${if (this.weChatAppSecretKey.isNotEmpty()) ",[weChatAppSecretKey:${this.weChatAppSecretKey}]" else ""}".logD()
         }
 
+        /**
+         * 配置支付宝参数
+         * [alipayAppId] 支付宝AppId
+         * [alipayPid]支付宝商户号
+         */
+        fun enableAlipayPlatform(alipayAppId: String, alipayPid: String, privateKey: String) {
+            this.alipayAppId = alipayAppId
+            this.alipayPid = alipayPid
+            this.alipayPrivateKey = privateKey
+            "支付宝平台配置完成，[alipayAppId:${this.alipayAppId},alipayPid:${this.alipayPid},privateKey:${this.alipayPrivateKey}]".logD()
+        }
+
         fun build(): SocialConfig {
-            return SocialConfig(application,weChatAppId,weChatAppSecretKey,okHttpClient)
+            return SocialConfig(
+                application,
+                weChatAppId,
+                weChatAppSecretKey,
+                okHttpClient,
+                alipayAppId,
+                alipayPid,
+                alipayPrivateKey
+            )
         }
 
     }

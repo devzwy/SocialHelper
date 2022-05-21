@@ -22,3 +22,4 @@ rootProject.name = "SocialSample"
 include ':Sample'
 include ':SocialHelper'
 include ':WeChat'
+include ':AliPay'

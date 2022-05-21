@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="it.github.socialhelper.alipay">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <queries>
+        <!--   可查询支付宝，并与其交互     -->
+        <package android:name="com.eg.android.AlipayGphone" />
+    </queries>
+<!--    <application>-->
+<!--        <activity-->
+<!--            android:name="com.alipay.sdk.app.H5PayActivity"-->
+<!--            android:configChanges="orientation|keyboardHidden|navigation"-->
+<!--            android:exported="false"-->
+<!--            tools:replace="android:configChanges"-->
+<!--            android:screenOrientation="behind"/>-->
+<!--&lt;!&ndash;        <activity&ndash;&gt;-->
+<!--&lt;!&ndash;            android:name="com.alipay.sdk.auth.AuthActivity"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:configChanges="orientation|keyboardHidden|navigation"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:exported="false"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:screenOrientation="behind"></activity>&ndash;&gt;-->
+<!--    </application>-->
+
+
+</manifest>

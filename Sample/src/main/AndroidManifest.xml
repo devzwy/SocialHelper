@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.socialhelper.demo">
 
+<!--    <uses-permission android:name="android.permission.INTERNET"/>-->
+<!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
+<!--    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,6 +28,9 @@
         <activity android:name=".wxapi.WXEntryActivity"
             android:launchMode="singleTask"
             android:taskAffinity="io.github.socialhelper.demo"
+            android:exported="true"/>
+
+        <activity android:name=".apshare.ShareEntryActivity"
             android:exported="true"/>
 
     </application>
