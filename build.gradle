@@ -13,5 +13,6 @@ ext {
     MINSDK = 21
     TARGETSDK = 32
     VERSIONCODE=1
-    VERSIONNAME = "1.0.0"
+    VERSIONNAME = "1.0.5"
+    GROUPID = "io.github.devzwy"
 }

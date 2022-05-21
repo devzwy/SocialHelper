@@ -1,6 +1,6 @@
 # SocialHelper
 
-[SocialHelper](https://github.com/devzwy/SocialHelper) 可以帮你快速完成国内以及国外很多平台的授权登录、分享功能。全部采用三方平台最新的Api实现；平台太多需要慢慢迭代上去，我会一直维护这个库。由于测试比较困难，每加入一个平台我都要去做测试，大家不要催。
+[SocialHelper](https://github.com/devzwy/SocialHelper) 可以帮你快速完成国内以及国外很多平台的授权登录、分享功能。全部采用三方平台最新的Api实现；平台太多需要慢慢迭代上去，我会一直维护这个库。
 
 由于该类型库的测试太麻烦，欢迎小伙伴们与我一起维护该库，**wdsf.top@gmail.com**与我联系，帮忙测试自己拥有的平台。我会在文末永久印下参与测试的小伙伴，愿岁月静好~
 
@@ -13,8 +13,11 @@
 - [ ] 🚑 Line
 - [ ] 📝 ...
 
+![demo效果图](https://download.wdsf.top/dev%2Fimage%2Fdemo.png)  
+
 [演示效果](https://download.wdsf.top/dev/video/show.mp4)  
 
+[点击下载已签名demo](https://download.wdsf.top/dev/apk/demo.apk)
 
 ## 如何使用
 
@@ -26,10 +29,19 @@
 > 点击Sync Now
 
 ```
-//必选
-implementation("io.github:SocialHelper:TODO")
-//可选
-TODO
+    //必选
+    implementation("io.github.devzwy:socialhelper:1.0.5")
+    
+    //微信平台 可选 需要时集成
+    implementation('com.tencent.mm.opensdk:wechat-sdk-android:6.8.0')
+    implementation("io.github.devzwy:socialhelper.wechat:1.0.5"){
+        transitive = false
+    }
+
+    //支付宝平台 可选 需要时集成
+    implementation("io.github.devzwy:socialhelper.alipay:1.0.5"){
+        transitive = false
+    }
 ```
 
 #### 2.初始化

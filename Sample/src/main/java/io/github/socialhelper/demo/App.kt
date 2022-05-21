@@ -1,9 +1,8 @@
 package io.github.socialhelper.demo
 
 import android.app.Application
-import io.github.social.SocialConfig
-import io.github.social.SocialHelper
-import it.github.socialhelper.alipay.reqAliPayAuth
+import io.github.devzwy.socialhelper.SocialConfig
+import io.github.devzwy.socialhelper.SocialHelper
 
 class App : Application() {
     override fun onCreate() {

@@ -7,7 +7,7 @@
 ```
 package io.github.socialhelper.demo.wxapi
 
-import io.github.socialhelper.wechat.WeChatSocialEntryActivity
+import io.github.devzwy.socialhelper.wechat.WeChatSocialEntryActivity
 
 class WXEntryActivity : WeChatSocialEntryActivity() {
 }
@@ -26,7 +26,7 @@ class WXEntryActivity : WeChatSocialEntryActivity() {
 ```
 package io.github.socialhelper.demo.apshare
 
-import it.github.socialhelper.alipay.AlipaySocialEntryActivity
+import it.github.devzwy.socialhelper.alipay.AlipaySocialEntryActivity
 
 class ShareEntryActivity: AlipaySocialEntryActivity() {
 }

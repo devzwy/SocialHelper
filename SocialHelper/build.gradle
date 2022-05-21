@@ -3,6 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+ext {
+    PUBLISH_GROUP_ID = GROUPID        //项目包名
+    PUBLISH_ARTIFACT_ID = 'socialhelper'            //项目名
+    PUBLISH_VERSION = VERSIONNAME                //版本号
+}
+
+apply from: "../publish.gradle"
+
+
 android {
     compileSdk COMPILESDK
 
@@ -34,6 +43,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.google.code.gson:gson:2.9.0")
-    implementation ('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1')
-    implementation ('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1')
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1')
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1')
 }

@@ -12,15 +12,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.whygraphics.multilineradiogroup.MultiLineRadioGroup
-import io.github.social.SocialHelper
-import io.github.social.utils.toJsonStr
-import io.github.socialhelper.wechat.*
-import io.github.socialhelper.wechat.data.WeChatShareType
-import io.github.socialhelper.wechat.data.WeChatSocialReqAuthRespData
-import it.github.socialhelper.alipay.reqAliPayAuth
-import it.github.socialhelper.alipay.shareImageToAlipay
-import it.github.socialhelper.alipay.shareTextToAlipay
-import it.github.socialhelper.alipay.shareWebPageToAlipay
+import io.github.devzwy.socialhelper.SocialHelper
+import io.github.devzwy.socialhelper.utils.toJsonStr
+import io.github.devzwy.socialhelper.wechat.*
+import io.github.devzwy.socialhelper.wechat.data.WeChatShareType
+import io.github.devzwy.socialhelper.wechat.data.WeChatSocialReqAuthRespData
+import it.github.devzwy.socialhelper.alipay.reqAliPayAuth
+import it.github.devzwy.socialhelper.alipay.shareImageToAlipay
+import it.github.devzwy.socialhelper.alipay.shareTextToAlipay
+import it.github.devzwy.socialhelper.alipay.shareWebPageToAlipay
 
 class MainActivity : AppCompatActivity() {
 

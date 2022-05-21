@@ -58,11 +58,23 @@ dependencies {
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     implementation("com.github.Gavras:MultiLineRadioGroup:v1.0.0.6")
+//
+    implementation("io.github.devzwy:socialhelper:1.0.5")
+
+    implementation('com.tencent.mm.opensdk:wechat-sdk-android:6.8.0')
+    implementation("io.github.devzwy:socialhelper.wechat:1.0.5"){
+        transitive = false
+    }
+
+    implementation("io.github.devzwy:socialhelper.alipay:1.0.5"){
+        transitive = false
+    }
+//
 
 
-    implementation project(path: ':SocialHelper')
-    implementation project(path: ':WeChat')
-    implementation project(path: ':AliPay')
+//    implementation project(path: ':SocialHelper')
+//    implementation project(path: ':WeChat')
+//    implementation project(path: ':AliPay')
 
 
 }
