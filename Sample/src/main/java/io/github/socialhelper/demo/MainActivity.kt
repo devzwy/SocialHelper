@@ -291,6 +291,9 @@ class MainActivity : AppCompatActivity() {
 
         //平台选择回调
         radioGroupPlatform.setOnCheckedChangeListener(MultiLineRadioGroup.OnCheckedChangeListener { group, button ->
+
+            btGetUserInfo.isEnabled = false
+
             when (button.text.toString()) {
                 platforms[0] -> {
                     //微信
