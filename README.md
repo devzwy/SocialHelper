@@ -129,6 +129,22 @@ SocialHelper.shareImageToAlipay()
 SocialHelper.shareWebPageToAlipay()
 
 ```
+<p align="center">
+  Visit Count（from 2020/08/19）<br>
+  <img src="https://profile-counter.glitch.me/razerdp-basepopup/count.svg" />
+</p>
 
+<p align="center">
+  Visit Count（from 2020/08/19）<br>
+  <img src="https://profile-counter.glitch.me/devzwy-SocialHelper/count.svg" />
+</p>
 
+<p align="center">
+  Visit Count（from 2020/08/19）<br>
+  <img src="https://profile-counter.glitch.me/devzwy-socialhelper/count.svg" />
+</p>
+
+![](https://changkun.de/urlstat?mode=github&repo=socialhelper/night)
+
+![](https://changkun.de/urlstat?mode=github&repo=SocialHelper/night)
 
