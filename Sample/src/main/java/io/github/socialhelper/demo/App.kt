@@ -10,8 +10,8 @@ class App:Application() {
         super.onCreate()
         SocialHelper.init(SocialConfig.buildSocialConfig(this){
             enableLog()
-            enableWeChatPlatform("wxb9469ff7cb67ec80","d42a8bcbe967f88bcb4f0085c9cdcae8")
-            enableAlipayPlatform("2021003130642055","2088712759594775","MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCV+mw7vQNn7qg0wIBjqV+4wVin3Fsg8zjMoSQXXJVYZQKhVpguwNlYTmMHnmHIlZIkUDO0mfDfBpTk44Rncqe0mPHuZGNTJ22k6iSbrtxQtJLBGMvffnPuNYXXvv1CcLLne7mFaPV0i1k+7hJficuokM5/E1eLu4lO8tfBM2iNz7U5kqKcFBTKzR28AvVaCzeosDoZ81WsLIxG9ORDUZYuh9aAYutgBaY4Zx5jTAohKP3WYfYL0WlNEQzPcbdFaWHfq7s6oZR+YdVJR6f8bHyhtvvC+S+PGjNzbmOTIVJI0KwnausHvAd0xs1nR/1j/vHCQV/SZ9LrDd4aym9zG4LZAgMBAAECggEANtVlJv43NZObKhZLmqR9W9ZM7KpzIvvqA17TDDuMWtIrgQNhBo75qACY0ltE0wpkcSRlkx1JZLFKVNkeOpg/2paktY08h1V+D/KPSeBHqrYqhbDkMSVRi4FEGxo4DEeaEWo57R3vyBl+mrR+QTHnJQ00gl92/Z6mWBgPbBK4okf/ZTROx1s3H2GsaoniDRGZHuRVs2hhL+HMo+9zn/1IDgu2fbAZouWK1keq9VXnpKkWb0VVgRnnRlegk9r/KrcuL7WJca1tg3lBqLTo9Olsbtu1kSWgfz11J8iJ6jsqjhq4dMcOsJU0sAH5dI74ofbOjv4oX08FNoqXfmqSneQRgQKBgQD/GnIw4mYuiPxiOragsWWktHO97d/MEXEb7QPC44rEs6ndYTtfKWbSVWhHZk4WXKoBZx4n7YXAZBkaBT2o1T+h9GIpCJtRNENnzsKbFlMQg5tbElmg6f3FiGYFk/buqb82WyeINQ8JmSiEWIuwiFMMEeHu5i/1Pi0DqHro78ox6QKBgQCWgWFW1lK/tqL/DBdXoSPAGXnWS3GaocimQU22UMGCAjb/VeSkD2W+6nVNP+3MVmOqfrdoowTU1Fa3chNJyn4qTReJQCZuL9wnOIdyfAYytZWlO3BTsSGNsJglNq3OEvntjMM3JoZuGhzgH8Aqcg4e3zxqOsNUY+XXpbB+Sr/DcQKBgQDx2G2XoJtE1MOIkKcg8u0s15K+5ev8eDCmS+377mJZlwacBRkXX5XGJAgnYHr5QkI98DernMfnnD4b6AoLrJeV/6yrwCgXNRgOKvtdsi1vg4VeMqhcIFlg0q397cf1fWH0szhoLf0imVvLFHLiGmu5Dp8GMJ4YvyhHxos3mFU1OQKBgHhXRy+Z+1xTeo0Ya+mjbOSC+kqA1Hth9QAKo0qt06xSfQs48LLFpQM8kUKNZWTHhrWi0KAYCRrsFdJkokuUX8EPF0ylQJVGK3Ao4RSHWqVdUCRoHG6u6TdUBrNqvxpRTgnFTaphYYfT1VbXzF2kCOpicPo3tktZ/UOqti6lMiPhAoGBAO0H3l/w3pPG+JU6puwxADVLmkNfR9Mp0XJnjpu+kydniYP3VFhk+raIq/LRLrdzX21iRPUIBHc1a2NaXUQsLQrlzb1tXpck9zzV4PWMRMmwOtyEGMX3BY2MJzIaRzWpqzpn8BsQfsgXROwMlRO9omb2hbHH2hWIqUrAyECGzt8a")
+            enableWeChatPlatform("微信AppId","微信secretKey")
+            enableAlipayPlatform("支付宝AppId","支付宝商户号","支付宝应用私钥")
         })
 
 

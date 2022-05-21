@@ -15,6 +15,7 @@ import it.github.socialhelper.alipay.util.OrderInfoUtil2_0
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URLDecoder
 import kotlin.random.Random
 
@@ -175,49 +176,54 @@ fun SocialHelper.reqAliPayAuth(
     checkAlipayApi(socialConfig)
 
     (mIAPApi.isZFBAppInstalled).yes {
-        socialConfig.run {
+        socialConfig.apply {
 
-            val authInfoMap = OrderInfoUtil2_0.buildAuthInfoMap(
-                alipayPid, alipayAppId,
-                "social_${System.currentTimeMillis() + Random.nextInt(1, 999999)}", true
-            )
-            val info = OrderInfoUtil2_0.buildOrderParam(authInfoMap)
+            CoroutineScope(Dispatchers.IO).launch {
+                OrderInfoUtil2_0.buildAuthInfoMap(
+                    alipayPid, alipayAppId,
+                    "social_${System.currentTimeMillis() + Random.nextInt(1, 999999)}", true
+                ).let { authInfoMap ->
 
-            val sign = OrderInfoUtil2_0.getSign(authInfoMap, alipayPrivateKey, true)
-            val authInfo = "$info&$sign"
+                    AuthTask(activity).let { authTask ->
+                        authTask.authV2(
+                            "${OrderInfoUtil2_0.buildOrderParam(authInfoMap)}&${
+                                OrderInfoUtil2_0.getSign(
+                                    authInfoMap,
+                                    alipayPrivateKey,
+                                    true
+                                )
+                            }", showLoadingDialog
+                        ).toJsonStr().toObject(AlipayResult::class.java).let {
 
-            val authTask = AuthTask(activity)
-
-            val result = authTask.authV2(authInfo, showLoadingDialog).toJsonStr()
-
-            result.toObject(AlipayResult::class.java).let {
-
-                if (it.resultStatus == 9000) {
-                    //授权成功
-                    pareParam(URLDecoder.decode(it.result)).let {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            if (it.success && it.result_code == 200) {
-                                onSuccess(it)
+                            if (it.resultStatus == 9000) {
+                                //授权成功
+                                pareParam(URLDecoder.decode(it.result)).let {
+                                    if (it.success && it.result_code == 200) {
+                                        withContext(Dispatchers.Main) {
+                                            onSuccess(it)
+                                        }
+                                    } else {
+                                        withContext(Dispatchers.Main) {
+                                            onError(application.getString(R.string.social_auth_code_null))
+                                        }
+                                    }
+                                }
                             } else {
-                                onError(application.getString(R.string.social_auth_code_null))
+                                withContext(Dispatchers.Main) {
+                                    //授权失败
+                                    onError(if (it.memo.isEmpty()) application.getString(R.string.social_auth_fail) else it.memo)
+                                }
                             }
+
                         }
                     }
-                } else {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        //授权失败
-                        onError(if (it.memo.isEmpty()) application.getString(R.string.social_auth_fail) else it.memo)
-                    }
                 }
-
             }
 
         }
     }.otherwise {
-        CoroutineScope(Dispatchers.Main).launch {
-            //支付宝未安装
-            onError(socialConfig.application.getString(R.string.social_not_install_alipay_app_tip))
-        }
+        //支付宝未安装
+        onError(socialConfig.application.getString(R.string.social_not_install_alipay_app_tip))
     }
 
 

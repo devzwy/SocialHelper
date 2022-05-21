@@ -8,7 +8,13 @@ import com.alipay.share.sdk.openapi.BaseResp
 import com.alipay.share.sdk.openapi.IAPAPIEventHandler
 import io.github.social.utils.logD
 import io.github.social.utils.toJsonStr
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
+/**
+ * 客户端继承自该类即可
+ */
 open class AlipaySocialEntryActivity : Activity(), IAPAPIEventHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +32,13 @@ open class AlipaySocialEntryActivity : Activity(), IAPAPIEventHandler {
     }
 
     override fun onResp(p0: BaseResp) {
-        if (p0.errCode == 0) {
-            mAliPayReqShareSuccessListener?.let { it() }
-        } else {
-            mAliPayReqShareErrorListener?.let { it(p0.errStr) }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            if (p0.errCode == 0) {
+                mAliPayReqShareSuccessListener?.let { it() }
+            } else {
+                mAliPayReqShareErrorListener?.let { it(p0.errStr) }
+            }
         }
 
         finish()

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     //目标通道类型
     lateinit var radioGroupToType: MultiLineRadioGroup
 
-    lateinit var tv2:TextView
+    lateinit var tv2: TextView
 
     //获取授权按钮
     lateinit var btGetAuth: Button
@@ -122,13 +122,11 @@ class MainActivity : AppCompatActivity() {
 
             if (platform == 1) {
                 //支付宝
-                Thread {
-                    SocialHelper.reqAliPayAuth(this, true, {
-                        appendLog(it)
-                    }, {
-                        appendLog(it.toJsonStr())
-                    })
-                }.start()
+                SocialHelper.reqAliPayAuth(this, true, {
+                    appendLog(it)
+                }, {
+                    appendLog(it.toJsonStr())
+                })
             }
         }
 
@@ -401,7 +399,7 @@ class MainActivity : AppCompatActivity() {
         radioGroupPlatform = findViewById(R.id.radioGroupPlatform)
         radioGroupContentType = findViewById(R.id.radioGroupContentType)
         radioGroupToType = findViewById(R.id.radioGroupToType)
-        tv2 =  findViewById(R.id.tv2)
+        tv2 = findViewById(R.id.tv2)
         btGetAuth = findViewById(R.id.btGetAuth)
         btGetUserInfo = findViewById(R.id.btGetUserInfo)
         btShare = findViewById(R.id.btShare)

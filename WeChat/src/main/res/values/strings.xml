@@ -6,7 +6,4 @@
     <string name="social_wechat_share_err">分享失败,%d</string>
     <string name="social_wechat_pay_cancel_err">用户取消支付</string>
     <string name="social_wechat_pay_other_err">支付失败,%d</string>
-
-
-
 </resources>

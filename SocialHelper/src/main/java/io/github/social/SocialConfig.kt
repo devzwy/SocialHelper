@@ -51,16 +51,24 @@ class SocialConfig private constructor(
 
     class Builder(val application: Application) {
 
-        /*微信AppId*/
+        /**
+         * 微信AppId
+         */
         private var weChatAppId = ""
 
-        /*微信secretKey*/
+        /**
+         * 微信secretKey
+         */
         private var weChatAppSecretKey = ""
 
-        //内部网络请求使用
+        /**
+         * 内部网络请求使用
+         */
         private var okHttpClient = OkHttpClient()
 
-        //支付宝AppId
+        /**
+         * 支付宝AppId
+         */
         private var alipayAppId = ""
 
         /**

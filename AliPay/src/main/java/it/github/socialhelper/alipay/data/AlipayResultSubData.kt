@@ -1,5 +1,8 @@
 package it.github.socialhelper.alipay.data
 
+/**
+ * 支付宝授权回传参数
+ */
 data class AlipayResultSubData(
     val success: Boolean,
     val result_code: Int,

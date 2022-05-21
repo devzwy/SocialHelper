@@ -114,6 +114,7 @@ open class WeChatSocialEntryActivity : Activity(), IWXAPIEventHandler {
      */
     private fun onReqAuthSucc(resp: SendAuth.Resp) {
 
+        resp.toJsonStr().logD()
         //判断是否配置weChatAppSecretKey
         SocialHelper.socialConfig.weChatAppSecretKey.isEmpty().yes {
             //未配置时直接回传authCode即可
