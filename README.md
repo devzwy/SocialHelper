@@ -13,11 +13,17 @@
 - [ ] 🚑 Line
 - [ ] 📝 ...
 
+## demo效果图
 ![demo效果图](https://download.wdsf.top/dev%2Fimage%2Fdemo.png)  
 
 [演示效果](https://download.wdsf.top/dev/video/show.mp4)  
 
 [点击下载已签名demo](https://download.wdsf.top/dev/apk/socialhelper.apk)
+
+<p align="center">
+  Visit Count（from 2022/05/22）<br>
+  <img src="https://profile-counter.glitch.me/devzwy-SocialHelper/count.svg" />
+</p>
 
 ## 如何使用
 
@@ -129,10 +135,5 @@ SocialHelper.shareImageToAlipay()
 SocialHelper.shareWebPageToAlipay()
 
 ```
-
-<p align="center">
-  Visit Count（from 2022/05/22）<br>
-  <img src="https://profile-counter.glitch.me/devzwy-SocialHelper/count.svg" />
-</p>
 
 
