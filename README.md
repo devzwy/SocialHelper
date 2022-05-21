@@ -35,7 +35,7 @@ TODO
 #### 2.初始化
 
 > 别忘了在AndroidManifest.xml注册自己的Application~
-> 依据各平台SDK的要求，您可能还需要对不同平台做单独配置。具体配置请[点我查看](TODO)
+> 依据各平台SDK的要求，您可能还需要对不同平台做单独配置。具体配置请[点我查看](https://github.com/devzwy/SocialHelper/blob/main/PlatformInfo.md)
 
 ```
 class MyApplication:Application() {
