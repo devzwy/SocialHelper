@@ -23,7 +23,7 @@
 
 **注意**：__由于该类SDK二次封装的特殊性，Demo是无法直接运行看到结果的，具体请参考Api说明。或者下载打包好的Apk测试__
 
-#### 1.引入依赖  [![Packaging status](https://img.shields.io/nexus/r/top.wdsf/SocialHelper?label=SocialHelper&nexusVersion=2&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://github.com/devzwy/SocialHelper)
+#### 1.引入依赖  [![Packaging status](https://img.shields.io/nexus/r/io.github.devzwy/socialhelper?label=SocialHelper&nexusVersion=2&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://github.com/devzwy/SocialHelper)
 
 > 下面的版本号(1.0.0)换成上面图片中的最新版本(**去掉v**)
 > 点击Sync Now
