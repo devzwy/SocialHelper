@@ -17,7 +17,7 @@
 
 [演示效果](https://download.wdsf.top/dev/video/show.mp4)  
 
-[点击下载已签名demo](https://download.wdsf.top/dev/apk/demo.apk)
+[点击下载已签名demo](https://download.wdsf.top/dev/apk/socialhelper.apk)
 
 ## 如何使用
 
