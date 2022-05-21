@@ -54,7 +54,7 @@ class MyApplication:Application() {
         super.onCreate()
          SocialHelper.init(SocialConfig.buildSocialConfig(this) {
             enableLog()
-            enableWeChatPlatform("微信AppId", "微信secretKey")
+            enableWeChatPlatform("微信AppId", "微信secretKey(可选)")
             enableAlipayPlatform("支付宝AppId", "支付宝商户号", "支付宝应用私钥")
             ..
         })
