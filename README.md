@@ -48,7 +48,7 @@
         transitive = false
     }
     
-     //支付宝平台 可选 需要时集成
+     //Google平台 可选 需要时集成
     implementation("io.github.devzwy:socialhelper.google:1.0.6"){
         transitive = false
     }
