@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.linecorp.linesdk.auth.LineLoginResult
 import com.whygraphics.multilineradiogroup.MultiLineRadioGroup
 import io.github.devzwy.socialhelper.SocialHelper
 import io.github.devzwy.socialhelper.alipay.reqAliPayAuth
@@ -22,6 +23,9 @@ import io.github.devzwy.socialhelper.alipay.shareWebPageToAlipay
 import io.github.devzwy.socialhelper.google.GoogleSocialConst.Companion.REQUEST_CODE_GOOGLE_AUTH
 import io.github.devzwy.socialhelper.google.onGoogleAuthResult
 import io.github.devzwy.socialhelper.google.reqGoogleAuth
+import io.github.devzwy.socialhelper.line.LineSocialConst.Companion.REQUEST_CODE_LINE_AUTH
+import io.github.devzwy.socialhelper.line.onLineAuthResult
+import io.github.devzwy.socialhelper.line.reqLineAuth
 import io.github.devzwy.socialhelper.utils.toJsonStr
 import io.github.devzwy.socialhelper.wechat.*
 import io.github.devzwy.socialhelper.wechat.data.WeChatShareType
@@ -79,6 +83,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_GOOGLE_AUTH) SocialHelper.onGoogleAuthResult(data)
+        if (requestCode == REQUEST_CODE_LINE_AUTH) SocialHelper.onLineAuthResult(data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +121,7 @@ class MainActivity : AppCompatActivity() {
     var weChatAuthData: WeChatSocialReqAuthRespData? = null
 
     var mGoogleSignInAccount: GoogleSignInAccount? = null
+    var mLineLoginResult: LineLoginResult? = null
 
     private fun initClickListener() {
 
@@ -155,6 +161,17 @@ class MainActivity : AppCompatActivity() {
                 })
             }
 
+            if (platform == 3) {
+                //发起Line授权
+                SocialHelper.reqLineAuth(this, {
+                    appendLog(it)
+                }, {
+                    this.mLineLoginResult = it
+                    appendLog(it.toJsonStr())
+                    btGetUserInfo.isEnabled = true
+                })
+            }
+
         }
 
         //获取用户资料按钮
@@ -180,6 +197,16 @@ class MainActivity : AppCompatActivity() {
                     appendLog("personEmail:${it.email}")
                     appendLog("personId:${it.id}")
                     appendLog("personPhoto:${it.photoUrl}")
+                }
+            }
+
+            if (platform == 3) {
+                //Line
+                this.mLineLoginResult?.lineProfile?.let {
+                    //演示 从对象取出对应用户资料
+                    appendLog("displayName:${it.displayName}")
+                    appendLog("userId:${it.userId}")
+                    appendLog("pictureUrl:${it.pictureUrl}")
                 }
             }
 
@@ -398,7 +425,26 @@ class MainActivity : AppCompatActivity() {
                     radioGroupContentType.visibility = View.GONE
                     btGetUserInfo.visibility = View.VISIBLE
                 }
+                platforms[3] -> {
+                    //Google
+                    platform = 3
 
+                    contentTypes = resources.getStringArray(R.array.radio_buttons_type_alipay)
+
+                    radioGroupContentType.removeAllButtons()
+                    contentTypes.forEach {
+                        radioGroupContentType.addButtons(it)
+                    }
+
+                    radioGroupContentType.check(contentTypes[0])
+
+                    radioGroupToType.visibility = View.GONE
+                    tv2.visibility = View.GONE
+                    tv1.visibility = View.GONE
+                    btShare.visibility = View.GONE
+                    radioGroupContentType.visibility = View.GONE
+                    btGetUserInfo.visibility = View.VISIBLE
+                }
             }
 
             refreshUI()

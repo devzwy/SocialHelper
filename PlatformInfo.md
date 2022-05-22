@@ -40,3 +40,31 @@ class ShareEntryActivity: AlipaySocialEntryActivity() {
 ## Google
 - src目录同级防止在google平台生成的**google-services.json**
   ![google_platform](https://download.wdsf.top/dev/image/google_platform.png)  
+
+- 调用授权**Activity**的**onActivityResult**中增加如下代码
+```
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //加入这一行
+        if (requestCode == REQUEST_CODE_GOOGLE_AUTH) SocialHelper.onGoogleAuthResult(data)
+    }
+```
+
+## Line
+- 在**AndroidManifest.xml**下的**application标签加入如下代码**
+``` 
+  <application
+        //加入这两行
+         xmlns:tools="http://schemas.android.com/tools"
+        tools:replace="android:allowBackup"
+        >
+```
+
+- 调用授权**Activity**的**onActivityResult**中增加如下代码
+```
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //加入这一行
+        if (requestCode == REQUEST_CODE_LINE_AUTH) SocialHelper.onLineAuthResult(data)
+    }
+```

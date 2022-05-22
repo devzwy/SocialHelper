@@ -42,7 +42,13 @@ class SocialConfig private constructor(
     /**
      * google client ID like:312345678907-aa345c1jn1c3kstealsio4aaqe8m888e.apps.googleusercontent.com
      */
-    val googleClientId: String
+    val googleClientId: String,
+
+
+    /**
+     * Line appId
+     */
+    val lineAppId: String
 
 ) {
 
@@ -89,6 +95,11 @@ class SocialConfig private constructor(
          * google client ID like:312345678907-aa345c1jn1c3kstealsio4aaqe8m888e.apps.googleusercontent.com
          */
         private var googleClientId: String = ""
+
+        /**
+         * Line appId
+         */
+        private var lineAppId = ""
 
         /**
          * 开启日志  可选配置 默认关闭
@@ -144,7 +155,17 @@ class SocialConfig private constructor(
          */
         fun enableGooglePlatform(clientId: String) {
             this.googleClientId = clientId.trim()
+            if (this.googleClientId.isEmpty()) throw SocialException("google平台参数配置错误，请重新配置！[googleClientId不能为空]")
             "Google平台配置完成，[googleClientId:${this.googleClientId}]".logD()
+        }
+
+        /**
+         * 开启Line平台
+         */
+        fun enableLinePlatform(lineAppId: String) {
+            this.lineAppId = lineAppId.trim()
+            if (this.lineAppId.isEmpty()) throw SocialException("Line平台参数配置错误，请重新配置！[lineAppId不能为空]")
+            "Line平台配置完成，[lineAppId:${this.lineAppId}]".logD()
         }
 
         fun build(): SocialConfig {
@@ -156,7 +177,8 @@ class SocialConfig private constructor(
                 this.alipayAppId,
                 this.alipayPid,
                 this.alipayPrivateKey,
-                this.googleClientId
+                this.googleClientId,
+                this.lineAppId
             )
         }
 

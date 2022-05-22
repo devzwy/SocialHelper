@@ -5,8 +5,6 @@ plugins {
 
 android {
 
-    //
-
     compileSdk COMPILESDK
 
     defaultConfig {
@@ -23,10 +21,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("E:\\StudioProjects\\keys\\hila_release.jks")
-            storePassword 'hila1024'
-            keyAlias = 'hilakey'
-            keyPassword 'hila1024'
+            storeFile file("E:\\StudioProjects\\keys\\social_demo.jks")
+            storePassword 'abc123456'
+            keyAlias = 'socialhelper'
+            keyPassword 'abc123456'
 
             v1SigningEnabled true
             v2SigningEnabled true
@@ -69,19 +67,30 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     implementation("com.github.Gavras:MultiLineRadioGroup:v1.0.0.6")
-//
-    implementation("io.github.devzwy:socialhelper:1.0.6")
 
+    //基础依赖
+    implementation("io.github.devzwy:socialhelper:1.0.7")
+
+    //微信平台
     implementation('com.tencent.mm.opensdk:wechat-sdk-android:6.8.0')
-    implementation("io.github.devzwy:socialhelper.wechat:1.0.6"){
+    implementation("io.github.devzwy:socialhelper.wechat:1.0.7"){
         transitive = false
     }
 
-    implementation("io.github.devzwy:socialhelper.alipay:1.0.6"){
+    //支付宝平台
+    implementation("io.github.devzwy:socialhelper.alipay:1.0.7"){
         transitive = false
     }
+
+    //google平台
     implementation("com.google.android.gms:play-services-auth:20.2.0")
-    implementation("io.github.devzwy:socialhelper.google:1.0.6"){
+    implementation("io.github.devzwy:socialhelper.google:1.0.7"){
+        transitive = false
+    }
+
+    //line平台
+    implementation("com.linecorp.linesdk:linesdk:5.8.0")
+    implementation("io.github.devzwy:socialhelper.line:1.0.7"){
         transitive = false
     }
 //
@@ -89,6 +98,6 @@ dependencies {
 //    implementation project(path: ':WeChat')
 //    implementation project(path: ':AliPay')
 //    implementation project(path: ':Google')
-
+//    implementation project(path: ':Line')
 
 }

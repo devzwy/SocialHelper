@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.socialhelper.demo">
-<!--    package="com.maitang.hila">-->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -11,6 +10,8 @@
         android:name=".App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:replace="android:allowBackup"
         android:theme="@style/Theme.SocialSample">
         <activity
             android:name=".MainActivity"

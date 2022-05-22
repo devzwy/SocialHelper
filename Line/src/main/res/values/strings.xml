@@ -1,0 +1,4 @@
+<resources>
+    <string name="social_auth_fail">授权失败，请重试</string>
+    <string name="social_auth_fail_exception">授权异常，%s</string>
+</resources>

@@ -9,7 +9,7 @@
 - [x] 🎉 微信平台 **授权**、**获取用户资料**、**分享**[支持文本、图片、音乐、视频、网页、小程序]
 - [x] 🎉 支付宝平台 **授权**、**分享**[支持文本、图片、网页]
 - [x] 💃🏻 Google **授权**、**获取用户资料**
-- [ ] 🚑 Line
+- [x] 🚑 Line **授权**、**获取用户资料**
 - [ ] 📝 ...
 
 ## demo效果图
@@ -35,24 +35,29 @@
 
 ```
     //必选
-    implementation("io.github.devzwy:socialhelper:1.0.6")
+    implementation("io.github.devzwy:socialhelper:1.0.7")
     
     //微信平台 可选 需要时集成
     implementation('com.tencent.mm.opensdk:wechat-sdk-android:6.8.0')
-    implementation("io.github.devzwy:socialhelper.wechat:1.0.6"){
+    implementation("io.github.devzwy:socialhelper.wechat:1.0.7"){
         transitive = false
     }
 
     //支付宝平台 可选 需要时集成
-    implementation("io.github.devzwy:socialhelper.alipay:1.0.6"){
+    implementation("io.github.devzwy:socialhelper.alipay:1.0.7"){
         transitive = false
     }
     
      //Google平台 可选 需要时集成
     implementation("com.google.android.gms:play-services-auth:20.2.0")
-    implementation("io.github.devzwy:socialhelper.google:1.0.6"){
+    implementation("io.github.devzwy:socialhelper.google:1.0.7"){
         transitive = false
     }
+    
+    implementation("io.github.devzwy:socialhelper.line:1.0.7"){
+        transitive = false
+    }
+    
 ```
 
 #### 2.初始化
@@ -68,6 +73,7 @@ class MyApplication:Application() {
             enableWeChatPlatform("微信AppId", "微信secretKey(可选)")
             enableAlipayPlatform("支付宝AppId", "支付宝商户号", "支付宝应用私钥")
             enableGooglePlatform("Google客户端Id clientId")
+            enableLinePlatform("Line AppId")
             ..
         })
     }
@@ -155,7 +161,7 @@ SocialHelper.reqGoogleAuth(this, {
                 })
 ```
 
-- 获取用户资料
+- 获取用户资料(授权返回数据读取)
 ```
  this.mGoogleSignInAccount?.let {
                     //演示 从对象取出对应用户资料
@@ -172,3 +178,25 @@ SocialHelper.reqGoogleAuth(this, {
 SocialHelper.signOut()
 ```
 
+#### Line
+- 获取授权
+```
+SocialHelper.reqLineAuth(this, {
+                    appendLog(it)
+                }, {
+                //你要的东西应该在这个里面
+                    this.mLineLoginResult = it
+                    appendLog(it.toJsonStr())
+                    btGetUserInfo.isEnabled = true
+                })
+```
+
+- 获取用户资料(授权返回数据读取)
+```
+this.mLineLoginResult?.lineProfile?.let {
+                    //演示 从对象取出对应用户资料
+                    appendLog("displayName:${it.displayName}")
+                    appendLog("userId:${it.userId}")
+                    appendLog("pictureUrl:${it.pictureUrl}")
+                }
+```

@@ -15,8 +15,8 @@ import io.github.devzwy.socialhelper.google.GoogleSocialConst.Companion.REQUEST_
 import io.github.devzwy.socialhelper.utils.*
 
 
-lateinit var onGoogleReqAuthError: (String) -> Unit
-lateinit var onGoogleReqAuthSuccess: (GoogleSignInAccount) -> Unit
+private lateinit var onGoogleReqAuthError: (String) -> Unit
+private lateinit var onGoogleReqAuthSuccess: (GoogleSignInAccount) -> Unit
 
 /**
  * 在Google授权当前页面的Activity调用，调用处于[reqGoogleAuth]传入的activity保持一致 调用时请判断requestCode==[REQUEST_CODE_GOOGLE_AUTH]
