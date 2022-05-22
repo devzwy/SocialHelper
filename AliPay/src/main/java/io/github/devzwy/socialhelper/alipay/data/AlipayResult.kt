@@ -1,4 +1,4 @@
-package it.github.devzwy.socialhelper.alipay.data
+package io.github.devzwy.socialhelper.alipay.data
 
 data class AlipayResult(
     val memo: String,

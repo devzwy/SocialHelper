@@ -3,7 +3,6 @@ plugins {
     id 'com.android.library' version '7.1.3' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
@@ -13,6 +12,6 @@ ext {
     MINSDK = 21
     TARGETSDK = 32
     VERSIONCODE=1
-    VERSIONNAME = "1.0.5"
+    VERSIONNAME = "1.0.6"
     GROUPID = "io.github.devzwy"
 }

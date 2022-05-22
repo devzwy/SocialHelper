@@ -1,4 +1,4 @@
-package it.github.devzwy.socialhelper.alipay
+package io.github.devzwy.socialhelper.alipay
 
 import android.app.Activity
 import android.content.Intent

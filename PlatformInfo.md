@@ -26,7 +26,7 @@ class WXEntryActivity : WeChatSocialEntryActivity() {
 ```
 package io.github.socialhelper.demo.apshare
 
-import it.github.devzwy.socialhelper.alipay.AlipaySocialEntryActivity
+import io.github.devzwy.socialhelper.alipay.AlipaySocialEntryActivity
 
 class ShareEntryActivity: AlipaySocialEntryActivity() {
 }
@@ -36,3 +36,7 @@ class ShareEntryActivity: AlipaySocialEntryActivity() {
  <activity android:name=".apshare.ShareEntryActivity"
             android:exported="true"/>
 ```
+
+## Google
+- src目录同级防止在google平台生成的**google-services.json**
+  ![google_platform](https://download.wdsf.top/dev/image/google_platform.png)  

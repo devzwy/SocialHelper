@@ -8,8 +8,7 @@
 
 - [x] 🎉 微信平台 **授权**、**获取用户资料**、**分享**[支持文本、图片、音乐、视频、网页、小程序]
 - [x] 🎉 支付宝平台 **授权**、**分享**[支持文本、图片、网页]
-- [ ] 🏁 Facebook平台
-- [ ] 💃🏻 Google
+- [x] 💃🏻 Google **授权**、**获取用户资料**
 - [ ] 🚑 Line
 - [ ] 📝 ...
 
@@ -36,16 +35,21 @@
 
 ```
     //必选
-    implementation("io.github.devzwy:socialhelper:1.0.5")
+    implementation("io.github.devzwy:socialhelper:1.0.6")
     
     //微信平台 可选 需要时集成
     implementation('com.tencent.mm.opensdk:wechat-sdk-android:6.8.0')
-    implementation("io.github.devzwy:socialhelper.wechat:1.0.5"){
+    implementation("io.github.devzwy:socialhelper.wechat:1.0.6"){
         transitive = false
     }
 
     //支付宝平台 可选 需要时集成
-    implementation("io.github.devzwy:socialhelper.alipay:1.0.5"){
+    implementation("io.github.devzwy:socialhelper.alipay:1.0.6"){
+        transitive = false
+    }
+    
+     //支付宝平台 可选 需要时集成
+    implementation("io.github.devzwy:socialhelper.google:1.0.6"){
         transitive = false
     }
 ```
@@ -62,6 +66,7 @@ class MyApplication:Application() {
             enableLog()
             enableWeChatPlatform("微信AppId", "微信secretKey(可选)")
             enableAlipayPlatform("支付宝AppId", "支付宝商户号", "支付宝应用私钥")
+            enableGooglePlatform("Google客户端Id clientId")
             ..
         })
     }
@@ -136,4 +141,33 @@ SocialHelper.shareWebPageToAlipay()
 
 ```
 
+#### Google
+- 获取Google授权码
+```
+SocialHelper.reqGoogleAuth(this, {
+                    appendLog(it)
+                }, {
+                //你要的东西应该在这个里面
+                    this.mGoogleSignInAccount = it
+                    appendLog(it.toJsonStr())
+                    btGetUserInfo.isEnabled = true
+                })
+```
+
+- 获取用户资料
+```
+ this.mGoogleSignInAccount?.let {
+                    //演示 从对象取出对应用户资料
+                    appendLog("personName:${it.displayName}")
+                    appendLog("personGivenName:${it.givenName}")
+                    appendLog("personFamilyName:${it.familyName}")
+                    appendLog("personEmail:${it.email}")
+                    appendLog("personId:${it.id}")
+                    appendLog("personPhoto:${it.photoUrl}")
+                }
+```
+- 退出google登录并作废获取的signInAccount
+``` 
+SocialHelper.signOut()
+```
 

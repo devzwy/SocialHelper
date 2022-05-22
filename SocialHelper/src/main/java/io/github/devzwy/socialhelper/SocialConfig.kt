@@ -37,8 +37,12 @@ class SocialConfig private constructor(
     /**
      * 支付宝应用私钥
      */
-    val alipayPrivateKey: String
+    val alipayPrivateKey: String,
 
+    /**
+     * google client ID like:312345678907-aa345c1jn1c3kstealsio4aaqe8m888e.apps.googleusercontent.com
+     */
+    val googleClientId: String
 
 ) {
 
@@ -82,6 +86,11 @@ class SocialConfig private constructor(
         private var alipayPrivateKey = ""
 
         /**
+         * google client ID like:312345678907-aa345c1jn1c3kstealsio4aaqe8m888e.apps.googleusercontent.com
+         */
+        private var googleClientId: String = ""
+
+        /**
          * 开启日志  可选配置 默认关闭
          */
         fun enableLog(tag: String = "SocialHelper") {
@@ -117,21 +126,37 @@ class SocialConfig private constructor(
          * [alipayPid]支付宝商户号
          */
         fun enableAlipayPlatform(alipayAppId: String, alipayPid: String, privateKey: String) {
-            this.alipayAppId = alipayAppId
-            this.alipayPid = alipayPid
-            this.alipayPrivateKey = privateKey
+            this.alipayAppId = alipayAppId.trim()
+            this.alipayPid = alipayPid.trim()
+            this.alipayPrivateKey = privateKey.trim()
+
+            if (this.alipayPid.isEmpty() || this.alipayPid.isEmpty() || this.alipayPrivateKey.isEmpty()) throw SocialException(
+                "支付宝平台参数配置错误，请重新配置！"
+            )
+
             "支付宝平台配置完成，[alipayAppId:${this.alipayAppId},alipayPid:${this.alipayPid},privateKey:${this.alipayPrivateKey}]".logD()
+        }
+
+
+        /**
+         * 开启google平台
+         * [clientId] google client ID like:312345678907-aa345c1jn1c3kstealsio4aaqe8m888e.apps.googleusercontent.com
+         */
+        fun enableGooglePlatform(clientId: String) {
+            this.googleClientId = clientId.trim()
+            "Google平台配置完成，[googleClientId:${this.googleClientId}]".logD()
         }
 
         fun build(): SocialConfig {
             return SocialConfig(
-                application,
-                weChatAppId,
-                weChatAppSecretKey,
-                okHttpClient,
-                alipayAppId,
-                alipayPid,
-                alipayPrivateKey
+                this.application,
+                this.weChatAppId,
+                this.weChatAppSecretKey,
+                this.okHttpClient,
+                this.alipayAppId,
+                this.alipayPid,
+                this.alipayPrivateKey,
+                this.googleClientId
             )
         }
 

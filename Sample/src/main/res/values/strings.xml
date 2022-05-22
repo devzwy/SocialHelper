@@ -4,6 +4,7 @@
     <string-array name="radio_buttons_platform">
         <item>微信</item>
         <item>支付宝</item>
+        <item>Google</item>
     </string-array>
 
 

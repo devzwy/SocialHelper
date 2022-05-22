@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "312585482607",
+    "project_id": "hila-328309",
+    "storage_bucket": "hila-328309.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312585482607:android:f967809e54ac5fe249389a",
+        "android_client_info": {
+          "package_name": "com.maitang.hila"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312585482607-aa962c5jn1c8kstealsio9aaqe8m333e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maitang.hila",
+            "certificate_hash": "81fbe871b990b0bf083aaceea3d7829560e5571c"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC54t-fBZECy_5Zcntqjxv2UxqReA5o5aA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312585482607-iphdi5u634b7beieo8q6osrpih103g6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

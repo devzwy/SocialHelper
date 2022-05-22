@@ -1,6 +1,7 @@
 package io.github.socialhelper.demo
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -11,16 +12,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.whygraphics.multilineradiogroup.MultiLineRadioGroup
 import io.github.devzwy.socialhelper.SocialHelper
+import io.github.devzwy.socialhelper.alipay.reqAliPayAuth
+import io.github.devzwy.socialhelper.alipay.shareImageToAlipay
+import io.github.devzwy.socialhelper.alipay.shareTextToAlipay
+import io.github.devzwy.socialhelper.alipay.shareWebPageToAlipay
+import io.github.devzwy.socialhelper.google.GoogleSocialConst.Companion.REQUEST_CODE_GOOGLE_AUTH
+import io.github.devzwy.socialhelper.google.onGoogleAuthResult
+import io.github.devzwy.socialhelper.google.reqGoogleAuth
 import io.github.devzwy.socialhelper.utils.toJsonStr
 import io.github.devzwy.socialhelper.wechat.*
 import io.github.devzwy.socialhelper.wechat.data.WeChatShareType
 import io.github.devzwy.socialhelper.wechat.data.WeChatSocialReqAuthRespData
-import it.github.devzwy.socialhelper.alipay.reqAliPayAuth
-import it.github.devzwy.socialhelper.alipay.shareImageToAlipay
-import it.github.devzwy.socialhelper.alipay.shareTextToAlipay
-import it.github.devzwy.socialhelper.alipay.shareWebPageToAlipay
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,6 +48,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var radioGroupToType: MultiLineRadioGroup
 
     lateinit var tv2: TextView
+
+    lateinit var tv1:TextView
 
     //获取授权按钮
     lateinit var btGetAuth: Button
@@ -68,6 +75,11 @@ class MainActivity : AppCompatActivity() {
     val testMp4Url = "https://download.wdsf.top/dev/video/test.mp4"
     val testImageUrl = "https://download.wdsf.top/dev/image/test.webp"
     val testWWWUrl = "http://wdsf.top"
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_GOOGLE_AUTH) SocialHelper.onGoogleAuthResult(data)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,12 +115,15 @@ class MainActivity : AppCompatActivity() {
 
     var weChatAuthData: WeChatSocialReqAuthRespData? = null
 
+    var mGoogleSignInAccount: GoogleSignInAccount? = null
+
     private fun initClickListener() {
 
         //获取授权按钮
         btGetAuth.setOnClickListener {
 
             if (platform == 0) {
+                //发起微信授权
                 SocialHelper.reqWeChatAuth(onWeChatReqAuthError = {
                     appendLog(it)
                 }, onWeChatReqAuthSuccess = {
@@ -121,13 +136,25 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (platform == 1) {
-                //支付宝
+                //发起支付宝授权
                 SocialHelper.reqAliPayAuth(this, true, {
                     appendLog(it)
                 }, {
                     appendLog(it.toJsonStr())
                 })
             }
+
+            if (platform == 2) {
+                //发起Google授权
+                SocialHelper.reqGoogleAuth(this, {
+                    appendLog(it)
+                }, {
+                    this.mGoogleSignInAccount = it
+                    appendLog(it.toJsonStr())
+                    btGetUserInfo.isEnabled = true
+                })
+            }
+
         }
 
         //获取用户资料按钮
@@ -140,6 +167,19 @@ class MainActivity : AppCompatActivity() {
                     }, {
                         appendLog(it)
                     })
+                }
+            }
+
+            if (platform == 2) {
+                //Google
+                this.mGoogleSignInAccount?.let {
+                    //演示 从对象取出对应用户资料
+                    appendLog("personName:${it.displayName}")
+                    appendLog("personGivenName:${it.givenName}")
+                    appendLog("personFamilyName:${it.familyName}")
+                    appendLog("personEmail:${it.email}")
+                    appendLog("personId:${it.id}")
+                    appendLog("personPhoto:${it.photoUrl}")
                 }
             }
 
@@ -309,7 +349,11 @@ class MainActivity : AppCompatActivity() {
                     radioGroupContentType.check(contentTypes[0])
 
                     tv2.visibility = View.VISIBLE
+                    tv1.visibility = View.VISIBLE
+                    btShare.visibility = View.VISIBLE
+                    radioGroupContentType.visibility = View.VISIBLE
                     radioGroupToType.visibility = View.VISIBLE
+                    btGetUserInfo.visibility = View.VISIBLE
 
                 }
 
@@ -328,7 +372,33 @@ class MainActivity : AppCompatActivity() {
 
                     radioGroupToType.visibility = View.GONE
                     tv2.visibility = View.GONE
+                    tv1.visibility = View.VISIBLE
+                    btShare.visibility = View.VISIBLE
+                    radioGroupContentType.visibility = View.VISIBLE
+                    btGetUserInfo.visibility = View.INVISIBLE
                 }
+
+                platforms[2] -> {
+                    //Google
+                    platform = 2
+
+                    contentTypes = resources.getStringArray(R.array.radio_buttons_type_alipay)
+
+                    radioGroupContentType.removeAllButtons()
+                    contentTypes.forEach {
+                        radioGroupContentType.addButtons(it)
+                    }
+
+                    radioGroupContentType.check(contentTypes[0])
+
+                    radioGroupToType.visibility = View.GONE
+                    tv2.visibility = View.GONE
+                    tv1.visibility = View.GONE
+                    btShare.visibility = View.GONE
+                    radioGroupContentType.visibility = View.GONE
+                    btGetUserInfo.visibility = View.VISIBLE
+                }
+
             }
 
             refreshUI()
@@ -403,6 +473,7 @@ class MainActivity : AppCompatActivity() {
         radioGroupContentType = findViewById(R.id.radioGroupContentType)
         radioGroupToType = findViewById(R.id.radioGroupToType)
         tv2 = findViewById(R.id.tv2)
+        tv1 = findViewById(R.id.tv1)
         btGetAuth = findViewById(R.id.btGetAuth)
         btGetUserInfo = findViewById(R.id.btGetUserInfo)
         btShare = findViewById(R.id.btShare)

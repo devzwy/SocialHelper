@@ -1,4 +1,4 @@
-package it.github.devzwy.socialhelper.alipay.util;
+package io.github.devzwy.socialhelper.alipay.util;
 
 public final class Base64 {
 

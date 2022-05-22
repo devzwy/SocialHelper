@@ -11,6 +11,7 @@ class App : Application() {
             enableLog()
             enableWeChatPlatform("微信AppId", "微信secretKey")
             enableAlipayPlatform("支付宝AppId", "支付宝商户号", "支付宝应用私钥")
+            enableGooglePlatform("Google clientId")
         })
     }
 

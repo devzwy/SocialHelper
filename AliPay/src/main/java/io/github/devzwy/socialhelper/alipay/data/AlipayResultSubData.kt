@@ -1,4 +1,4 @@
-package it.github.devzwy.socialhelper.alipay.data
+package io.github.devzwy.socialhelper.alipay.data
 
 /**
  * 支付宝授权回传参数

@@ -3,7 +3,6 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-
     }
 }
 
@@ -23,3 +22,4 @@ include ':Sample'
 include ':SocialHelper'
 include ':WeChat'
 include ':AliPay'
+include ':Google'

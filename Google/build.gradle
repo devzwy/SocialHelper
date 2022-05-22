@@ -5,7 +5,7 @@ plugins {
 
 ext {
     PUBLISH_GROUP_ID = GROUPID        //项目包名
-    PUBLISH_ARTIFACT_ID = 'socialhelper.alipay'            //项目名
+    PUBLISH_ARTIFACT_ID = 'socialhelper.google'            //项目名
     PUBLISH_VERSION = VERSIONNAME                    //版本号
 }
 
@@ -23,7 +23,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -40,12 +39,12 @@ android {
 }
 
 dependencies {
-    api files('libs/libapshare.jar')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
     implementation project(path: ':SocialHelper')
-    api('com.alipay.sdk:alipaysdk-android:15.8.10@aar')
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1')
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1')
+    
+    //google pay
+    api 'com.google.android.gms:play-services-auth:20.2.0'
 }

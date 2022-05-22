@@ -1,4 +1,4 @@
-package it.github.devzwy.socialhelper.alipay
+package io.github.devzwy.socialhelper.alipay
 
 import android.app.Activity
 import com.alipay.sdk.app.AuthTask
@@ -9,9 +9,9 @@ import io.github.devzwy.socialhelper.utils.otherwise
 import io.github.devzwy.socialhelper.utils.toJsonStr
 import io.github.devzwy.socialhelper.utils.toObject
 import io.github.devzwy.socialhelper.utils.yes
-import it.github.devzwy.socialhelper.alipay.data.AlipayResult
-import it.github.devzwy.socialhelper.alipay.data.AlipayResultSubData
-import it.github.devzwy.socialhelper.alipay.util.OrderInfoUtil2_0
+import io.github.devzwy.socialhelper.alipay.data.AlipayResult
+import io.github.devzwy.socialhelper.alipay.data.AlipayResultSubData
+import io.github.devzwy.socialhelper.alipay.util.OrderInfoUtil2_0
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
