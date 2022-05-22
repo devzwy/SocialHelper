@@ -54,6 +54,8 @@
         transitive = false
     }
     
+    //Line平台 可选 需要时集成
+    implementation("com.linecorp.linesdk:linesdk:5.8.0")
     implementation("io.github.devzwy:socialhelper.line:1.0.7"){
         transitive = false
     }
