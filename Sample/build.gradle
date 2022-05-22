@@ -70,25 +70,25 @@ dependencies {
 
     implementation("com.github.Gavras:MultiLineRadioGroup:v1.0.0.6")
 //
-    implementation("io.github.devzwy:socialhelper:1.0.5")
+    implementation("io.github.devzwy:socialhelper:1.0.6")
 
     implementation('com.tencent.mm.opensdk:wechat-sdk-android:6.8.0')
-    implementation("io.github.devzwy:socialhelper.wechat:1.0.5"){
+    implementation("io.github.devzwy:socialhelper.wechat:1.0.6"){
         transitive = false
     }
 
-    implementation("io.github.devzwy:socialhelper.alipay:1.0.5"){
+    implementation("io.github.devzwy:socialhelper.alipay:1.0.6"){
         transitive = false
     }
-
+    implementation("com.google.android.gms:play-services-auth:20.2.0")
     implementation("io.github.devzwy:socialhelper.google:1.0.6"){
         transitive = false
     }
 //
-    implementation project(path: ':SocialHelper')
-    implementation project(path: ':WeChat')
-    implementation project(path: ':AliPay')
-    implementation project(path: ':Google')
+//    implementation project(path: ':SocialHelper')
+//    implementation project(path: ':WeChat')
+//    implementation project(path: ':AliPay')
+//    implementation project(path: ':Google')
 
 
 }
