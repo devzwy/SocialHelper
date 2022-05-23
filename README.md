@@ -2,7 +2,15 @@
 
 [SocialHelper](https://github.com/devzwy/SocialHelper) 可以帮你快速完成国内以及国外很多平台的授权登录、分享功能。全部采用三方平台最新的Api实现；平台太多需要慢慢迭代上去，我会一直维护这个库。
 
-由于该类型库的测试太麻烦，欢迎小伙伴们与我一起维护该库，**wdsf.top@gmail.com**与我联系，帮忙测试自己拥有的平台。我会在文末永久印下参与测试的小伙伴，愿岁月静好~
+由于该类型库的测试太麻烦，欢迎小伙伴们与我一起维护该库，**wdsf.top@gmail.com**与我联系，帮忙测试自己拥有的平台。
+
+<p align="center">
+  Visit Count（from 2022/05/22）<br>
+  <img src="https://profile-counter.glitch.me/devzwy-SocialHelper/count.svg" />
+</p>
+
+## 致谢参与测试的用户 
+[ailala](https://github.com/ailalay/ailalay.github.io)  
 
 ## 待办
 
@@ -12,17 +20,13 @@
 - [x] 🚑 Line **授权**、**获取用户资料**
 - [ ] 📝 ...
 
+
 ## demo效果图
 ![demo效果图](https://download.wdsf.top/dev%2Fimage%2Fdemo.png)  
 
 [演示效果](https://download.wdsf.top/dev/video/show.mp4)  
 
 [点击下载已签名demo](https://download.wdsf.top/dev/apk/socialhelper.apk)
-
-<p align="center">
-  Visit Count（from 2022/05/22）<br>
-  <img src="https://profile-counter.glitch.me/devzwy-SocialHelper/count.svg" />
-</p>
 
 ## 如何使用
 
