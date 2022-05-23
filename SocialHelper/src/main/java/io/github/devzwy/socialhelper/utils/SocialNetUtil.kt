@@ -29,9 +29,7 @@ object SocialNetUtil {
 
             override fun onResponse(call: Call, response: Response) {
 
-                if (response.isSuccessful && response.body != null
-                ) {
-
+                if (response.isSuccessful && response.body != null) {
                     response.body!!.string().let { respStr ->
                         CoroutineScope(Dispatchers.Main).launch {
                             (respStr.isEmpty()).yes {
