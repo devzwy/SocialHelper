@@ -14,7 +14,6 @@ object SocialNetUtil {
 
     /**
      * 发送get请求
-     *
      */
     fun sendGet(url: String, onSucc: (String) -> Unit, onErr: (String) -> Unit) {
         SocialHelper.socialConfig.okHttpClient.newCall(
